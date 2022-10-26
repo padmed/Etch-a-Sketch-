@@ -1,0 +1,33 @@
+body,html {
+    margin: 0px;
+    height: 100%;
+}
+
+#header {
+    border-bottom: 1px solid;
+    min-height: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    margin: 0px;
+}
+
+#center {
+    border: 1px solid;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#draw-box {
+    border: 1px solid;
+    height: 70vh;
+    width: 70vh;
+    margin-top: 15vh;
+    
+}
