@@ -5,13 +5,23 @@
     <title>Etch-A-Sketch</title>
     <script src="logic.js" defer></script>
     <link rel="stylesheet" href="style.css">
+    <link href="http://fonts.cdnfonts.com/css/8bit-wonder" rel="stylesheet">
 </head>
 <body>
     <div id="header">
         <h1 id="title"> Etch-a-Sketch </h1>
     </div>
-    <div id="center">
-        <div id="draw-box">yolo</div>
+    <div id="middle">
+        <div id="user-settings">
+            <div id="sizeRange"> 
+                <label>Grid Size: </label>
+                <input type="range" min="16" max="100">
+            </div>
+            <button id="clear" class="button"> Clear Grid </button>
+        </div>
+        <div id="center">
+            <div id="draw-box"></div>
+        </div>
     </div>
 </body>
 </html>
