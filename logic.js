@@ -9,7 +9,7 @@
 class EtchASketch {
     constructor(size) {
         this.pad = document.getElementById('draw-box');
-        this.padSize = size;
+        this.padSize = 16;
         this.color = 'black';
     }
 
@@ -33,11 +33,14 @@ class EtchASketch {
 
 }
 
-pad = new EtchASketch(100);
-pad.fillPad()
+pad = new EtchASketch();
+
+
 
 // const range = document.getElementById('range');
 // range.addEventListener('input', function (event) {
+//     pad.padSize = range.value;
+//     pad.fillPad()
 //     console.log(range.value)
 // })
 
