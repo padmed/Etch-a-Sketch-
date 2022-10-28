@@ -5,7 +5,7 @@ body,html {
 }
 
 #header {
-    border-bottom: 4px solid #FF165D;
+    border-bottom: 3px solid #F6F7D7;
     min-height: 5%;
     display: flex;
     justify-content: center;
@@ -15,7 +15,8 @@ body,html {
 
 h1 {
     margin: 0px;
-    color: #FF165D
+    color: #FF165D;
+    -webkit-text-stroke: 2px #F6F7D7; 
 }
 
 #middle{
@@ -24,7 +25,8 @@ h1 {
     height: 100%;
     justify-content: center;
     background-color: #3EC1D3;
-    padding-right: 15vh;
+    padding-right: 17vh;
+    flex-wrap: wrap;
 }
 
 #center {
@@ -32,13 +34,14 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
-    /* border: 3px solid #FF165D; */
+    padding: 5px;
+    border: 1px solid #ffffff;;
     border-radius: 6px;
     background-color: #FF9A00;
-    /* box-shadow: 10px 10px 10px #FF9A00; */
     /* don't forget to properly center sketchpad after setting button sizes */
 }
+
+
 
 #draw-box {
     border: 3px solid #FF165D;
@@ -54,6 +57,7 @@ h1 {
     gap: 5vh;
     margin-right: 4vh;
     padding-top: 3vh;
+    border: 1px solid
  
 }
 
@@ -87,7 +91,7 @@ color: transparent;
 
 input[type=range]::-webkit-slider-thumb {
 -webkit-appearance: none;
-border: 1px solid #FF165D;
+border: 1px solid #ffffff;
 height: 20px;
 width: 16px;
 border-radius: 3px;
@@ -100,7 +104,7 @@ box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to you
 /* All the same stuff for Firefox */
 input[type=range]::-moz-range-thumb {
 box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-border: 2px solid white;
+border: 1px solid #ffffff;
 height: 25px;
 width: 12px;
 border-radius: 3px;
@@ -111,7 +115,7 @@ cursor: pointer;
 /* All the same stuff for IE */
 input[type=range]::-ms-thumb {
 box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-border: 1px solid #FF165D;
+border: 1px solid #ffffff;
 height: 36px;
 width: 16px;
 border-radius: 3px;
@@ -124,10 +128,10 @@ input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 8.4px;
     cursor: pointer;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    box-shadow: 1px 1px 1px #F6F7D7, 0px 0px 1px #F6F7D7;
     background: #FF9A00;
     border-radius: 1.3px;
-    border: 0.2px solid #010101;
+    border: 0.2px solid #F6F7D7;
   }
   
 input[type=range]:focus::-webkit-slider-runnable-track {
@@ -138,10 +142,10 @@ input[type=range]::-moz-range-track {
 width: 100%;
 height: 8.4px;
 cursor: pointer;
-box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+box-shadow: 1px 1px 1px #F6F7D7, 0px 0px 1px #F6F7D7;
 background: #FF9A00;
 border-radius: 1.3px;
-border: 0.2px solid #010101;
+border: 0.2px solid #F6F7D7;
 }
 
 input[type=range]::-ms-track {
@@ -155,18 +159,18 @@ color: transparent;
 }
 input[type=range]::-ms-fill-lower {
 background: #FF9A00;;
-border: 0.2px solid #010101;
+border: 0.2px solid #F6F7D7;
 border-radius: 2.6px;
-box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+box-shadow: 1px 1px 1px #F6F7D7, 0px 0px 1px #F6F7D7;
 }
 input[type=range]:focus::-ms-fill-lower {
 background: #FF9A00;;
 }
 input[type=range]::-ms-fill-upper {
 background: #FF9A00;;
-border: 0.2px solid #010101;
+border: 0.2px solid #F6F7D7;
 border-radius: 2.6px;
-box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+box-shadow: 1px 1px 1px #F6F7D7, 0px 0px 1px #F6F7D7;
 }
 input[type=range]:focus::-ms-fill-upper {
 background: #FF9A00;;
