@@ -50,7 +50,20 @@ h1 {
     width: 70vh;
     background-color: #F6F7D7;
     border-radius: 3px;
+    display: flex;
+    flex-direction: column;
 }
+
+.parentDiv {
+    display: flex;
+    height: 100%;
+}
+
+.grid {
+    width: 100%;
+    border: 0.1px solid;
+}
+
 
 #user-settings {
     display: flex;
@@ -65,6 +78,26 @@ h1 {
 label {
     color: #FF165D;
 }
+
+
+#sizeRange {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* #############slider########### */
 input[type=range] {
     -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
@@ -175,10 +208,4 @@ box-shadow: 1px 1px 1px #F6F7D7, 0px 0px 1px #F6F7D7;
 }
 input[type=range]:focus::-ms-fill-upper {
 background: #FF9A00;;
-}
-
-#sizeRange {
-    display: flex;
-    flex-direction: column;
-    gap: 1vh
 }
