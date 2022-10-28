@@ -1,13 +1,14 @@
-// 1. take the size of sketchpad and initialize it in a class
-// 2. make a method for building a grid in sketchpad
+// 1. take the size of sketchpad and initialize it in a class (done)
+// 2. make a method for building a grid in sketchpad (done)
 // 3. add listener for grids in sketchpad
 // 4. make a method for coloring grids in sketchpad
 // 5. make a method to be able to clear sketchpad
 // 6. make option for grid option turn on/off
+// 7. make option to draw with hover or click
 
 
 class EtchASketch {
-    constructor(size) {
+    constructor() {
         this.pad = document.getElementById('draw-box');
         this.padSize = 16;
         this.color = 'black';
@@ -24,24 +25,27 @@ class EtchASketch {
                 childDiv.classList.add('grid');
                 div.appendChild(childDiv);
             }
-
-        console.log(div.childNodes)
         }
     }
 
-
-
+    clearPad = function () {
+        const toRemove = document.querySelectorAll('.parentDiv');
+        toRemove.forEach((element) => element.remove());
+    }
 }
 
 pad = new EtchASketch();
 
 
 
-// const range = document.getElementById('range');
-// range.addEventListener('input', function (event) {
-//     pad.padSize = range.value;
-//     pad.fillPad()
-//     console.log(range.value)
-// })
+
+
+const range = document.getElementById('range');
+range.addEventListener('input', function (event) {
+    pad.padSize = range.value;
+    pad.clearPad();
+    pad.fillPad();
+    console.log(range.value)
+})
 
 
