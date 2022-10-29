@@ -11,19 +11,25 @@
     <div id="header">
         <h1 id="title"> Etch-a-Sketch </h1>
     </div>
-    <div id="middle">
+    <div id="centre">
         <div id="user-settings">
-            <div id="sizeRange"> 
-                <label>Grid Size: </label>
-                <input id="range" type="range" min="16" max="70" step="1">
+                <div id="sizeRange"> 
+                    <label>Grid Size: </label>
+                    <input id="range" type="range" min="16" max="70" step="1">
+                </div>
+                <button id="clear" class="button"> Clear Grid </button>
             </div>
-            <button id="clear" class="button"> Clear Grid </button>
-        </div>
-        <div id="forPadding">
-            <div id="center">
-                <div id="draw-box"></div>
+        <div id="middle">
+            <div id="color-settings"> 
+                <div id="black" class="color" > </div>
+                <div id="green" class="color"> </div>
+                <div id="red" class="color"> </div> 
+            </div>
+            <div id="frame">
+                <div id="draw-box" class="invisibleElement"></div>
             </div>
         </div>
+        <div id="invisibleElement"></div>
     </div>
 </body>
 </html>
