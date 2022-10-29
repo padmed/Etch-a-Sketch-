@@ -1,8 +1,8 @@
 // 1. take the size of sketchpad and initialize it in a class (done)
 // 2. make a method for building a grid in sketchpad (done)
-// 3. add listener for grids in sketchpad
+// 3. add listener for grids in sketchpad (done)
 // 4. make a method for coloring grids in sketchpad
-// 5. make a method to be able to clear sketchpad
+// 5. make a method to be able to clear sketchpad (method implemented/ need to listen to button)
 // 6. make option for grid option turn on/off
 // 7. make option to draw with hover or click
 
@@ -47,5 +47,24 @@ range.addEventListener('input', function (event) {
     pad.fillPad();
     console.log(range.value)
 })
+
+const removeInvisibleElement = function () {
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
+    const invisibleElement = document.getElementById('invisibleElement');
+
+    if (height <= 821 || width <= 1102 ) {
+        invisibleElement.style.display = 'none';
+        invisibleElement.classList.remove('invisibleElement');
+    } else {
+        invisibleElement.style.display = 'block';
+        invisibleElement.classList.add('invisibleElement');
+    }
+    console.log(width <= 810);
+
+    console.log(`width: ${width}, height: ${height}`);
+}
+
+window.addEventListener('resize', removeInvisibleElement);
 
 
