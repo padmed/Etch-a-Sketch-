@@ -55,7 +55,7 @@ const removeInvisibleElement = function () {
 
     if (height <= 821 && width <= 1102 ) {
         invisibleElement.classList.remove('invisibleElement');
-    } else if (height > 821 || width > 1102) {
+    } else {
         invisibleElement.classList.add('invisibleElement');
     }
     console.log(width <= 810);
