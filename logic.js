@@ -53,11 +53,9 @@ const removeInvisibleElement = function () {
     const width = document.documentElement.clientWidth;
     const height = document.documentElement.clientHeight;
 
-    if (height <= 821 || width <= 1102 ) {
-        invisibleElement.style.display = 'none';
+    if (height <= 821 && width <= 1102 ) {
         invisibleElement.classList.remove('invisibleElement');
-    } else {
-        invisibleElement.style.display = 'block';
+    } else if (height > 821 || width > 1102) {
         invisibleElement.classList.add('invisibleElement');
     }
     console.log(width <= 810);
