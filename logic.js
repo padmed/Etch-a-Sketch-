@@ -48,10 +48,10 @@ range.addEventListener('input', function (event) {
     console.log(range.value)
 })
 
+const invisibleElement = document.getElementById('invisibleElement');
 const removeInvisibleElement = function () {
     const width = document.documentElement.clientWidth;
     const height = document.documentElement.clientHeight;
-    const invisibleElement = document.getElementById('invisibleElement');
 
     if (height <= 821 || width <= 1102 ) {
         invisibleElement.style.display = 'none';
@@ -64,7 +64,7 @@ const removeInvisibleElement = function () {
 
     console.log(`width: ${width}, height: ${height}`);
 }
-
+invisibleElement.classList.add('invisibleElement');
 window.addEventListener('resize', removeInvisibleElement);
 
 
