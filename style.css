@@ -47,10 +47,42 @@ h1 {
 
 
 .color {
-    border: 1px solid;
-    width: 1.5vh;
-    height: 1.5vh;
+    border: 1px solid #F6F7D7;
+    width: 2vh;
+    height: 2vh;
     border-radius: 100%;
+}
+
+.color:hover {
+    transform: scale(1.1);
+}
+
+#blue {
+    background-color: #3330E4;
+}
+
+#orange {
+    background-color: #FD841F;
+}
+
+#red {
+    background-color: #D2001A;
+}
+
+#yellow {
+    background-color: #FCE700;
+}
+
+#green {
+    background-color: #425F57;
+}
+
+#violet {
+    background-color: #3F3B6C;
+}
+
+#black {
+    background-color: #0d0d0d;
 }
 
 #frame {
@@ -62,7 +94,7 @@ h1 {
     justify-content: center;
     align-items: center;
     padding: 5px;
-    border: 1px solid #ffffff;;
+    border: 1px solid #F6F7D7;;
     border-radius: 6px;
     background-color: #FF9A00;
     /* don't forget to properly center sketchpad after setting button sizes */
@@ -99,7 +131,7 @@ h1 {
     align-self: flex-start;
     flex: flex;
     gap: 5vh;
-    margin-right: 4vh;
+    margin-right: 10vh;
     padding-top: 3vh;
     display: row;
     /* border: 1px solid */
