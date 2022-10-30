@@ -10,6 +10,7 @@
 class EtchASketch {
     constructor() {
         this.pad = document.getElementById('draw-box');
+        this.colorList = document.querySelectorAll('.color');
         this.padSize = 16;
         this.color = 'black';
     }
@@ -32,21 +33,49 @@ class EtchASketch {
         const toRemove = document.querySelectorAll('.parentDiv');
         toRemove.forEach((element) => element.remove());
     }
+
+    // interactiveInputRange  = function () {
+    //     EtchASketch.padSize = range.value;
+    //     EtchASketch.clearPad();
+    //     EtchASketch.fillPad();
+    // } 
+
+    // main = function () {
+    //     const range = document.getElementById('range');
+    //     range.addEventListener('input', this.interactiveInputRange);
+        
+    // }
 }
 
-pad = new EtchASketch();
+
+
+class EtchASketchMain {
+    constructor (obj) {
+        this.pad = new EtchASketch;
+        this.inputRange = document.getElementById('range');
+        this.main();
+    }
+
+    interactiveInputRange = function () {
+        const inputRange = document.getElementById('range');
+        this.pad.padSize = inputRange.value;
+        this.pad.clearPad();
+        this.pad.fillPad();
+    }
+
+    main = function () {
+        this.inputRange.addEventListener('input', this.interactiveInputRange.bind(this))
+    }
 
 
 
+}
 
 
-const range = document.getElementById('range');
-range.addEventListener('input', function (event) {
-    pad.padSize = range.value;
-    pad.clearPad();
-    pad.fillPad();
-    console.log(range.value)
-})
+
+program = new EtchASketchMain()
+
+
 
 const invisibleElement = document.getElementById('invisibleElement');
 const removeInvisibleElement = function () {
@@ -58,9 +87,7 @@ const removeInvisibleElement = function () {
     } else {
         invisibleElement.classList.add('invisibleElement');
     }
-    console.log(width <= 810);
-
-    console.log(`width: ${width}, height: ${height}`);
+    // console.log(`width: ${width}, height: ${height}`);
 }
 invisibleElement.classList.add('invisibleElement');
 window.addEventListener('resize', removeInvisibleElement);
