@@ -42,8 +42,11 @@ class EtchASketch {
     }
 
     colorGrid = function (event) {
-        event.target.setAttribute('style', `background-color: ${this.color}`)
-        console.log(event.target)
+        if(event.target.classList.contains('grid')) {
+
+            event.target.setAttribute('style', `background-color: black`)
+            console.log(event.target)
+        }
     }
 
     //sets propertie based on user selection, clears previous grid, fills new grid.
@@ -71,13 +74,12 @@ class EtchASketch {
 
     main = function () {
         this.fillPad();
-        const squares = document.querySelectorAll('.grid');
 
         this.inputRange.addEventListener('input', this.#interactiveInputRange.bind(this)); // listens to input 'range'
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
         this.colorList.forEach((colorDiv) => colorDiv.addEventListener('click', this.#takeColor.bind(this)));
-        squares.forEach((square) => square.addEventListener('click', this.colorGrid.bind(this))); 
+        this.pad.addEventListener('click', this.colorGrid)
     }
 
 }
