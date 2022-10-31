@@ -2,7 +2,7 @@
 // 2. make a method for building a grid in sketchpad (done)
 // 3. add listener for grids in sketchpad (done)
 // 4. make a method for coloring grids in sketchpad
-    // 1. be able to choose color
+    // 1. be able to choose color (done)
 // 5. make a method to be able to clear sketchpad (method implemented/ need to listen to button)
 // 6. make option for grid option turn on/off
 // 7. make option to draw with hover or click
@@ -41,6 +41,11 @@ class EtchASketch {
         toRemove.forEach((element) => element.remove());
     }
 
+    colorGrid = function (event) {
+        event.target.setAttribute('style', `background-color: ${this.color}`)
+        console.log(event.target)
+    }
+
     //sets propertie based on user selection, clears previous grid, fills new grid.
     #interactiveInputRange = function () {
         this.padSize = this.inputRange.value;
@@ -62,14 +67,17 @@ class EtchASketch {
 
     #takeColor = function (event) {
         this.color = event.target.id
-        console.log(this.color)
     }
 
     main = function () {
+        this.fillPad();
+        const squares = document.querySelectorAll('.grid');
+
         this.inputRange.addEventListener('input', this.#interactiveInputRange.bind(this)); // listens to input 'range'
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
         this.colorList.forEach((colorDiv) => colorDiv.addEventListener('click', this.#takeColor.bind(this)));
+        squares.forEach((square) => square.addEventListener('click', this.colorGrid.bind(this))); 
     }
 
 }
@@ -79,4 +87,5 @@ class EtchASketch {
 
 
 const pad = new EtchASketch();
+
 
