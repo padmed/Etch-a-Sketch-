@@ -1,7 +1,7 @@
 // 1. take the size of sketchpad and initialize it in a class (done)
 // 2. make a method for building a grid in sketchpad (done)
 // 3. add listener for grids in sketchpad (done)
-// 4. make a method for coloring grids in sketchpad
+// 4. make a method for coloring grids in sketchpad (done)
     // 1. be able to choose color (done)
 // 5. make a method to be able to clear sketchpad (method implemented/ need to listen to button)
 // 6. make option for grid option turn on/off
@@ -13,8 +13,9 @@ class EtchASketch {
         this.pad = document.getElementById('draw-box');
         this.colorList = document.querySelectorAll('.color');
         this.inputRange = document.getElementById('range');
+        this.inputRange.value = 16; //sets grid size at minimum on restart
+        this.padSize = 16; //initialize pad size
         this.invisibleElement = document.getElementById('invisibleElement');
-        this.padSize = 16;
         this.color = 'black';
 
         this.main();
@@ -44,7 +45,7 @@ class EtchASketch {
     colorGrid = function (event) {
         if(event.target.classList.contains('grid')) {
 
-            event.target.setAttribute('style', `background-color: black`)
+            event.target.setAttribute('style', `background-color: ${this.color}`)
             console.log(event.target)
         }
     }
@@ -69,7 +70,7 @@ class EtchASketch {
     }
 
     #takeColor = function (event) {
-        this.color = event.target.id
+        this.color = event.target.getAttribute('data-color');
     }
 
     main = function () {
@@ -79,7 +80,7 @@ class EtchASketch {
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
         this.colorList.forEach((colorDiv) => colorDiv.addEventListener('click', this.#takeColor.bind(this)));
-        this.pad.addEventListener('click', this.colorGrid)
+        this.pad.addEventListener('click', this.colorGrid.bind(this))
     }
 
 }
