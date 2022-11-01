@@ -41,16 +41,14 @@ h1 {
 }
 
 #color-settings {
-    border: 1px solid;
     display: flex;
     justify-content: space-between;
 }
 
 #colors {
     display: flex;
-    align-self: center;
     gap: 1vh;
-    border: 1px solid
+    align-self: end;
 }
 
 
@@ -92,6 +90,12 @@ h1 {
 
 #black {
     background-color: #0d0d0d;
+}
+
+
+img {
+    width: 3vh;
+    height: 3vh;
 }
 
 #frame {
@@ -300,4 +304,13 @@ input[type=range]::-ms-fill-upper {
 
 input[type=range]:focus::-ms-fill-upper {
     background: #FF9A00;
+}
+
+
+custom color chosser */
+
+input[type="color"] {
+    visibility:hidden;
+    width:0;
+    height:0
 }
