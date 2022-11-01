@@ -16,6 +16,7 @@ class EtchASketch {
         this.inputRange = document.getElementById('range');
         this.userSettings = document.getElementById('user-settings');
         this.invisibleElement = document.getElementById('invisibleElement');
+        this.gridSizeText = document.getElementById('grid-size');
         
 
         //initialize sketchpad settings
@@ -61,6 +62,11 @@ class EtchASketch {
         this.padSize = this.inputRange.value;
         this.clearPad();
         this.fillPad();
+        this.showGridSize();
+    }
+
+    showGridSize = function () {
+        this.gridSizeText.innerHTML = `Grid size: ${this.padSize}X${this.padSize}`;
     }
 
     // removes/adds invisible element based on window size
@@ -81,6 +87,7 @@ class EtchASketch {
 
     main = function () {
         this.fillPad();
+        this.showGridSize();
 
         this.inputRange.addEventListener('input', this.#interactiveInputRange.bind(this)); // listens to input 'range'
         // this.userSettings.addEventListener('click', )
