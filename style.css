@@ -41,10 +41,16 @@ h1 {
 }
 
 #color-settings {
-    width: 70vh;
+    border: 1px solid;
+    display: flex;
+    justify-content: space-between;
+}
+
+#colors {
     display: flex;
     align-self: center;
     gap: 1vh;
+    border: 1px solid
 }
 
 
@@ -53,6 +59,7 @@ h1 {
     width: 2vh;
     height: 2vh;
     border-radius: 100%;
+    cursor: pointer;
 }
 
 .color:hover {
@@ -126,6 +133,7 @@ h1 {
 .grid {
     width: 100%;
     border: 1px solid;
+    cursor: pointer;
 }
 
 
@@ -137,6 +145,7 @@ h1 {
     padding-top: 3vh;
     border: 1px solid;
     width: 20vh;
+    height: 50%;
 }
 
 #clear {
@@ -147,6 +156,7 @@ h1 {
     font-family: '8BIT WONDER', sans-serif;
     color: #FF165D;
     background-color: #FF9A00;
+    cursor: pointer;
 }
 
 #clear:hover {
