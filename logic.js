@@ -11,7 +11,7 @@
 class EtchASketch {
     constructor() {
         this.pad = document.getElementById('draw-box');
-        this.colorList = document.querySelectorAll('.color');
+        this.colors = document.getElementById('color-settings');
         this.inputRange = document.getElementById('range');
         this.inputRange.value = 16; //sets grid size at minimum on restart
         this.padSize = 16; //initialize pad size
@@ -79,8 +79,8 @@ class EtchASketch {
         this.inputRange.addEventListener('input', this.#interactiveInputRange.bind(this)); // listens to input 'range'
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
-        this.colorList.forEach((colorDiv) => colorDiv.addEventListener('click', this.#takeColor.bind(this)));
-        this.pad.addEventListener('click', this.colorGrid.bind(this))
+        this.colors.addEventListener('click', this.#takeColor.bind(this));
+        this.pad.addEventListener('click', this.colorGrid.bind(this));
     }
 
 }
