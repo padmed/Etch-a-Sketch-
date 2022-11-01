@@ -5,6 +5,8 @@ body,html {
     height: 100%;
     font-family: '8BIT WONDER', sans-serif; 
     background-color: #3EC1D3;
+    background-image: url("Img/clouds.png");
+    background-attachment: fixed;
 }
 
 #header {
@@ -128,14 +130,27 @@ h1 {
 
 
 #user-settings {
-    align-self: flex-start;
-    flex: flex;
+    display: flex;
+    flex-direction: column;
     gap: 5vh;
     margin-right: 10vh;
     padding-top: 3vh;
-    display: row;
-    /* border: 1px solid */
- 
+    border: 1px solid;
+    width: 20vh;
+}
+
+#clear {
+    width: 80%;
+    height: 4vh;
+    align-self: center;
+    border: 1px solid #F6F7D7;
+    font-family: '8BIT WONDER', sans-serif;
+    color: #FF165D;
+    background-color: #FF9A00;
+}
+
+#clear:hover {
+    transform: scale(1.1);
 }
 
 label {
@@ -146,7 +161,7 @@ label {
 #sizeRange {
     display: flex;
     flex-direction: column;
-    gap: 1vh
+    gap: 2vh
 }
 
 
