@@ -6,17 +6,23 @@
 // 5. make a method to be able to clear sketchpad (method implemented/ need to listen to button)
 // 6. make option for grid option turn on/off
 // 7. make option to draw with hover or click
-//                                                                  learn more about bind method
+// 8. fix the bug with invisible element
 
 class EtchASketch {
     constructor() {
+        //neccessary elements for application
         this.pad = document.getElementById('draw-box');
-        this.colors = document.getElementById('color-settings');
+        this.colors = document.getElementById('colors');
         this.inputRange = document.getElementById('range');
-        this.inputRange.value = 16; //sets grid size at minimum on restart
-        this.padSize = 16; //initialize pad size
+        this.userSettings = document.getElementById('user-settings');
         this.invisibleElement = document.getElementById('invisibleElement');
+        
+
+        //initialize sketchpad settings
         this.color = 'black';
+        this.padSize = 16; //initialize pad size
+        this.inputRange.value = 16; //sets grid size at minimum on restart
+        
 
         this.main();
     }
@@ -77,6 +83,7 @@ class EtchASketch {
         this.fillPad();
 
         this.inputRange.addEventListener('input', this.#interactiveInputRange.bind(this)); // listens to input 'range'
+        // this.userSettings.addEventListener('click', )
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
         this.colors.addEventListener('click', this.#takeColor.bind(this));
