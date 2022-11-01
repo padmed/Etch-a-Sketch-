@@ -15,22 +15,22 @@
         <div id="user-settings">
                 <div id="sizeRange"> 
                     <label>Grid Size: </label>
-                    <input id="range" type="range" min="16" max="70" step="1">
+                    <input id="range" type="range" min="16" max="70" step="1" value="16">
                 </div>
                 <button id="clear" class="button"> Clear Grid </button>
             </div>
         <div id="middle">
             <div id="color-settings"> 
-                <div id="red" class="color"> </div>
-                <div id="orange" class="color"> </div>
-                <div id="yellow" class="color"> </div>
-                <div id="green" class="color"> </div>
-                <div id="blue" class="color" ></div>
-                <div id="violet" class="color"> </div>
-                <div id="black" class="color"> </div> 
+                <div id="red" class="color" data-color="#D2001A"> </div>
+                <div id="orange" class="color" data-color="#FD841F"> </div>
+                <div id="yellow" class="color" data-color="#FCE700"> </div>
+                <div id="green" class="color" data-color="#425F57"> </div>
+                <div id="blue" class="color" data-color="#3330E4"></div>
+                <div id="violet" class="color" data-color="#3F3B6C"> </div>
+                <div id="black" class="color" data-color="black"> </div> 
             </div>
             <div id="frame">
-                <div id="draw-box" class="invisibleElement"></div>
+                <div id="draw-box" ></div>
             </div>
         </div>
         <div id="invisibleElement"></div>
