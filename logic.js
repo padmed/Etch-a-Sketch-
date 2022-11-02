@@ -12,11 +12,11 @@ class EtchASketch {
     constructor() {
         //neccessary elements for application
         this.pad = document.getElementById('draw-box');
-        this.colors = document.getElementById('colors');
         this.inputRange = document.getElementById('range');
         this.userSettings = document.getElementById('user-settings');
         this.invisibleElement = document.getElementById('invisibleElement');
         this.gridSizeText = document.getElementById('grid-size');
+        this.colorSettings = document.getElementById('color-settings')
         
 
         //initialize sketchpad settings
@@ -81,8 +81,15 @@ class EtchASketch {
         }
     }
 
-    #takeColor = function (event) {
-        this.color = event.target.getAttribute('data-color');
+    handleColorSettings = function (event) {
+        if (event.target.id === 'rgb') {
+            event.target.oninput = () => this.color = event.target.value
+        } else if (event.target.classList.contains('color')) {
+            this.color = event.target.getAttribute('data-color');
+        } else if (event.target.id ==='eraser') {
+            this.color = '#F6F7D7';
+        }
+
     }
 
     main = function () {
@@ -90,10 +97,9 @@ class EtchASketch {
         this.showGridSize();
 
         this.inputRange.addEventListener('input', this.#interactiveInputRange.bind(this)); // listens to input 'range'
-        // this.userSettings.addEventListener('click', )
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
-        this.colors.addEventListener('click', this.#takeColor.bind(this));
+        this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
         this.pad.addEventListener('click', this.colorGrid.bind(this));
     }
 
