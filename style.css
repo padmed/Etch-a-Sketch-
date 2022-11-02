@@ -167,8 +167,7 @@ img:hover {
     gap: 5vh;
     margin-right: 8vh;
     padding-top: 3vh;
-    border: 1px solid;
-    width: 25vh;
+    width: 27vh;
     height: 50%;
     align-items: center;
 }
@@ -186,6 +185,7 @@ img:hover {
     color: #FF165D;
     background-color: #FF9A00;
     cursor: pointer;
+    
 }
 
 #clear:hover {
@@ -203,6 +203,7 @@ label {
     gap: 2vh;
     align-items: center;
     font-size: 2.1vh;
+    -webkit-text-stroke: 1px #F6F7D7
 }
 
 #sizeRange > label {
@@ -212,7 +213,32 @@ label {
     align-items: center;
 }
 
+fieldset {
+    width: 80%;
+    margin: 0px;
+    padding: 1px;
+    color: #FF165D;
+    font-size: 1.2vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1vh;
+    border: 2px solid #F6F7D7;
+    background-color: #FF9A00;
+    height: 5vh;
+}
 
+fieldset:hover {
+    transform: scale(1.1);
+}
+
+legend {
+    font-size: 1.5vh;
+    color: #FF165D;
+    margin-right: auto;
+    margin-left: auto;
+    -webkit-text-stroke: 1px #F6F7D7
+}
 
 
 
@@ -338,3 +364,4 @@ input[type=range]::-ms-fill-upper {
 input[type=range]:focus::-ms-fill-upper {
     background: #FF9A00;
 }
+
