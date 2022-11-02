@@ -93,6 +93,13 @@ class EtchASketch {
 
     }
 
+    handleUserSettings = function (event) {
+        if (event.target.id == 'clear') {
+            this.clearPad();
+            this.fillPad();
+        }
+    }
+
     main = function () {
         this.fillPad();
         this.showGridSize();
@@ -102,6 +109,7 @@ class EtchASketch {
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
         this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
         this.pad.addEventListener('click', this.colorGrid.bind(this));
+        this.userSettings.addEventListener('click', this.handleUserSettings.bind(this));
     }
 
 }
@@ -112,4 +120,13 @@ class EtchASketch {
 
 const pad = new EtchASketch();
 
+
+// const radios =  document.querySelector('#user-settings');
+
+// radios.addEventListener('input', miau);
+
+// function miau (event) {
+    
+//         console.log(event.target.value)
+    
 
