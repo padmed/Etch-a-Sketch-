@@ -7,6 +7,7 @@
 // 6. make option for grid option turn on/off
 // 7. make option to draw with hover or click
 // 8. fix the bug with invisible element
+// 9. Make Velocity 
 
 class EtchASketch {
     constructor() {
@@ -66,7 +67,7 @@ class EtchASketch {
     }
 
     showGridSize = function () {
-        this.gridSizeText.innerHTML = `Grid size: ${this.padSize}X${this.padSize}`;
+        this.gridSizeText.innerHTML = `${this.padSize}X${this.padSize}`;
     }
 
     // removes/adds invisible element based on window size
