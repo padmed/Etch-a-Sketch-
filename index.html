@@ -14,10 +14,15 @@
     <div id="centre">
         <div id="user-settings">
                 <div id="sizeRange"> 
-                    <label><p id="grid-size"></p></label>
+                    <label>Grid size: <span id="grid-size"></span></label>
                     <input id="range" type="range" min="16" max="70" step="1" value="16">
                 </div>
-                <button id="clear" class="button"> Clear Grid </button>
+                <button id="clear" class="button"> Clear pad </button>
+                <fieldset>
+                    <legend>Grid border:</legend>
+                    <label> on <input type="radio" name="age" value="border-on"></label>
+                    <label> off <input type="radio" name="age" value="border-off"></label>
+                </fieldset>
             </div>
         <div id="middle">
             <div id="color-settings">
