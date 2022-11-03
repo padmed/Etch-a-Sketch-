@@ -156,10 +156,12 @@ img:hover {
 
 .grid {
     width: 100%;
-    border: 1px solid;
     cursor: pointer;
 }
 
+.gridBorder {
+    border: 1px solid;
+}
 
 #user-settings {
     display: flex;
