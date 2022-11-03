@@ -18,13 +18,14 @@ class EtchASketch {
         this.invisibleElement = document.getElementById('invisibleElement');
         this.gridSizeText = document.getElementById('grid-size');
         this.colorSettings = document.getElementById('color-settings')
+        this.squares = null; 
         
 
         //initialize sketchpad settings
         this.color = 'black';
         this.padSize = 16; //initialize pad size
         this.inputRange.value = 16; //sets grid size at minimum on restart
-        
+        this.gridBorders = true;
 
         this.main();
     }
@@ -42,6 +43,8 @@ class EtchASketch {
                 div.appendChild(childDiv);
             }
         }
+
+        this.squares = document.querySelectorAll('.grid'); // initilizes squares in grid after drawing them
     }
 
     //clears grid
@@ -56,6 +59,16 @@ class EtchASketch {
             event.target.setAttribute('style', `background-color: ${this.color}`)
             console.log(event.target)
         }
+    }
+
+    drawBorders = function () {
+        this.squares.forEach((square) => {
+            if (this.gridBorders) {
+                square.classList.add('gridBorder');
+            } else if (!this.gridBorders) {
+                square.classList.remove('gridBorder')
+            }
+        })
     }
 
     //sets propertie based on user selection, clears previous grid, fills new grid.
@@ -97,6 +110,14 @@ class EtchASketch {
         if (event.target.id == 'clear') {
             this.clearPad();
             this.fillPad();
+            this.drawBorders();
+        } else if (event.target.name == 'border') {
+            if (event.target.value == 'border-on') {
+                this.gridBorders = true;
+            } else {
+                this.gridBorders = false;
+            } this.drawBorders();
+
         }
     }
 
