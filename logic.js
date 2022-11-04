@@ -13,12 +13,12 @@ class EtchASketch {
     constructor() {
         //neccessary elements for application
         this.pad = document.getElementById('draw-box');
-        this.inputRange = document.getElementById('range');
-        this.userSettings = document.getElementById('user-settings');
-        this.invisibleElement = document.getElementById('invisibleElement');
-        this.gridSizeText = document.getElementById('grid-size');
-        this.colorSettings = document.getElementById('color-settings')
-        this.squares = null; 
+        this.inputRange = document.getElementById('range'); // "input range" element
+        this.userSettings = document.getElementById('user-settings'); //parent element for all user settings section
+        this.invisibleElement = document.getElementById('invisibleElement'); 
+        this.SketchPadSizeText = document.getElementById('grid-size'); //container for displaying sketchpad size
+        this.colorSettings = document.getElementById('color-settings') //parent element for all color settings
+        this.squares = null; // all square elements, initializes later after function draws them
         
 
         //initialize sketchpad settings
@@ -30,8 +30,8 @@ class EtchASketch {
         };
 
         this.padSize = 16; //initialize pad size
-        this.inputRange.value = 16; //sets grid size at minimum on restart
-        this.gridBorders = false;
+        this.inputRange.value = 16; //sets grid size - "input range" at minimum on restart
+        this.gridBorders = false; 
 
         this.main();
     }
@@ -99,7 +99,7 @@ class EtchASketch {
 
     //displays grid size in the app
     showGridSize = function () {
-        this.gridSizeText.innerHTML = `${this.padSize}X${this.padSize}`;
+        this.SketchPadSizeText.innerHTML = `${this.padSize}X${this.padSize}`;
     }
 
 
