@@ -86,6 +86,7 @@ class EtchASketch {
         this.clearPad();
         this.fillPad();
         this.showGridSize();
+        this.drawBorders();
     }
 
     //displays grid size in the app
