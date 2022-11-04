@@ -22,7 +22,6 @@ class EtchASketch {
         
 
         //initialize sketchpad settings
-        // this.color = 'black';
         this.color = {
             r: 0,
             g: 0,
@@ -37,22 +36,25 @@ class EtchASketch {
         this.main();
     }
 
+
     //creates parent - child div elements, takes grid form with css flexbox 
     fillPad = function () {
         for (let height = 1; height <= this.padSize; height++) {
+
             const div = document.createElement('div');
             div.classList.add('parentDiv');
             this.pad.appendChild(div);
 
             for (let width = 1; width <= this.padSize; width++) {
+
                 const childDiv = document.createElement('div');
                 childDiv.classList.add('grid');
                 div.appendChild(childDiv);
             }
-        }
 
-        this.squares = document.querySelectorAll('.grid'); // initilizes squares in grid after drawing them
+        } this.squares = document.querySelectorAll('.grid'); // initilizes squares in grid after drawing them
     }
+
 
     //clears grid
     clearPad = function () {
@@ -60,20 +62,25 @@ class EtchASketch {
         toRemove.forEach((element) => element.remove());
     }
 
-    // colors squares, takes rgba value
-    colorGrid = function (event) {
-        if(event.target.classList.contains('grid')) {
 
-            event.target.setAttribute('style', `background-color: rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`)
-            console.log(event.target)
+    // colors squares, takes rgba value
+    colorSquare = function (event) {
+        let square = event.target;
+
+        if(square.classList.contains('grid')) {
+            square.setAttribute('style', `background-color: 
+            rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`)
         }
     }
+
 
     // draws borders around the squares
     drawBorders = function () {
         this.squares.forEach((square) => {
+
             if (this.gridBorders) {
                 square.classList.add('gridBorder');
+
             } else if (!this.gridBorders) {
                 square.classList.remove('gridBorder')
             }
@@ -89,25 +96,30 @@ class EtchASketch {
         this.drawBorders();
     }
 
+
     //displays grid size in the app
     showGridSize = function () {
         this.gridSizeText.innerHTML = `${this.padSize}X${this.padSize}`;
     }
 
+
     // removes/adds invisible element based on window size
     #manipulateInvisibleElement = function () {
-        const width = document.documentElement.clientWidth;
-        const height = document.documentElement.clientHeight;
+        const windowWidth = document.documentElement.clientWidth;
+        const windowHeight = document.documentElement.clientHeight;
 
-        if (height <= 821 && width <= 1102 ) {
+        if (windowHeight <= 821 && windowWidth <= 1102 ) {
             invisibleElement.classList.remove('invisibleElement');
+
         } else {
             invisibleElement.classList.add('invisibleElement');
         }
     }
 
+
+    // converts hex value to rgb, so later to be able to adjust pencil color opacity
     hexToRGB = function (hex) {
-        if(hex.length === 4){
+        if (hex.length === 4) {
             let r = hex.slice(1,2);
             let g = hex.slice(2,3);
             let b = hex.slice(3,4);
@@ -124,32 +136,44 @@ class EtchASketch {
         this.color.b = parseInt(hex.slice(5, 7), 16);
     }
     
+
     handleColorSettings = function (event) {
-        if (event.target.id === 'rgb') {
-            event.target.oninput = () =>  this.hexToRGB(event.target.value);
-        } else if (event.target.classList.contains('color')) {
-            this.hexToRGB(event.target.getAttribute('data-color'));
-        } else if (event.target.id ==='eraser') {
+        const colorSetting = event.target;
+
+        if (colorSetting.id === 'rgb') {
+            colorSetting.oninput = () =>  this.hexToRGB(colorSetting.value);
+
+        } else if (colorSetting.classList.contains('color')) {
+            this.hexToRGB(colorSetting.getAttribute('data-color'));
+
+        } else if (colorSetting.id ==='eraser') {
             this.hexToRGB('#F6F7D7');
         }
 
     }
 
+
     handleUserSettings = function (event) {
-        if (event.target.id == 'clear') {
+        const userSetting = event.target;
+
+        if (userSetting.id == 'clear') {
             this.clearPad();
             this.fillPad();
             this.drawBorders();
-        } else if (event.target.name == 'border') {
-            if (event.target.value == 'border-on') {
+
+        } else if (userSetting.name == 'border') {
+
+            if (userSetting.value == 'border-on') {
                 this.gridBorders = true;
+
             } else {
                 this.gridBorders = false;
-            } this.drawBorders();
 
+            } this.drawBorders(); //if there's event on grid-border option, this function takes radio input value, sets boolean based on input and calls function which draws border based on that boolean.
         }
     }
 
+    
     main = function () {
         this.fillPad();
         this.showGridSize();
@@ -158,7 +182,7 @@ class EtchASketch {
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
         this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
-        this.pad.addEventListener('click', this.colorGrid.bind(this));
+        this.pad.addEventListener('click', this.colorSquare.bind(this));
         this.userSettings.addEventListener('click', this.handleUserSettings.bind(this));
     }
 
