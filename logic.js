@@ -3,8 +3,8 @@
 // 3. add listener for grids in sketchpad (done)
 // 4. make a method for coloring grids in sketchpad (done)
     // 1. be able to choose color (done)
-// 5. make a method to be able to clear sketchpad (method implemented/ need to listen to button)
-// 6. make option for grid option turn on/off
+// 5. make a method to be able to clear sketchpad (done()
+// 6. make option for grid option turn on/off (done)
 // 7. make option to draw with hover or click
 // 8. fix the bug with invisible element
 // 9. Make Velocity 
@@ -22,10 +22,17 @@ class EtchASketch {
         
 
         //initialize sketchpad settings
-        this.color = 'black';
+        // this.color = 'black';
+        this.color = {
+            r: 0,
+            g: 0,
+            b: 0,
+            a: 1.0
+        };
+
         this.padSize = 16; //initialize pad size
         this.inputRange.value = 16; //sets grid size at minimum on restart
-        this.gridBorders = true;
+        this.gridBorders = false;
 
         this.main();
     }
@@ -53,14 +60,16 @@ class EtchASketch {
         toRemove.forEach((element) => element.remove());
     }
 
+    // colors squares, takes rgba value
     colorGrid = function (event) {
         if(event.target.classList.contains('grid')) {
 
-            event.target.setAttribute('style', `background-color: ${this.color}`)
+            event.target.setAttribute('style', `background-color: rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`)
             console.log(event.target)
         }
     }
 
+    // draws borders around the squares
     drawBorders = function () {
         this.squares.forEach((square) => {
             if (this.gridBorders) {
@@ -79,6 +88,7 @@ class EtchASketch {
         this.showGridSize();
     }
 
+    //displays grid size in the app
     showGridSize = function () {
         this.gridSizeText.innerHTML = `${this.padSize}X${this.padSize}`;
     }
@@ -95,13 +105,31 @@ class EtchASketch {
         }
     }
 
+    hexToRGB = function (hex) {
+        if(hex.length === 4){
+            let r = hex.slice(1,2);
+            let g = hex.slice(2,3);
+            let b = hex.slice(3,4);
+          
+            this.color.r = parseInt(r+r, 16);
+            this.color.g = parseInt(g+g, 16);
+            this.color.b = parseInt(b+b, 16);
+            
+            return;
+          }
+        
+        this.color.r = parseInt(hex.slice(1, 3), 16);
+        this.color.g = parseInt(hex.slice(3, 5), 16);
+        this.color.b = parseInt(hex.slice(5, 7), 16);
+    }
+    
     handleColorSettings = function (event) {
         if (event.target.id === 'rgb') {
-            event.target.oninput = () => this.color = event.target.value
+            event.target.oninput = () =>  this.hexToRGB(event.target.value);
         } else if (event.target.classList.contains('color')) {
-            this.color = event.target.getAttribute('data-color');
+            this.hexToRGB(event.target.getAttribute('data-color'));
         } else if (event.target.id ==='eraser') {
-            this.color = '#F6F7D7';
+            this.hexToRGB('#F6F7D7');
         }
 
     }
@@ -140,14 +168,3 @@ class EtchASketch {
 
 
 const pad = new EtchASketch();
-
-
-// const radios =  document.querySelector('#user-settings');
-
-// radios.addEventListener('input', miau);
-
-// function miau (event) {
-    
-//         console.log(event.target.value)
-    
-
