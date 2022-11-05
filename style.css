@@ -1,5 +1,10 @@
 /* colors: FF9A00, F6F7D7, 3EC1D3, FF165D */
 
+@font-face {
+    font-family: '8BIT WONDER';
+    src: url(Font/8-BIT\ WONDER.TTF);
+}
+
 body,html {
     margin: 0px;
     height: 100%;
