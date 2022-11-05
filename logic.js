@@ -7,7 +7,9 @@
 // 6. make option for grid option turn on/off (done)
 // 7. make option to draw with hover or click
 // 8. fix the bug with invisible element
-// 9. Make Velocity 
+// 9. Make opacity
+    // 1. when color is choosen display that color in 5 different opacity levels;
+    // 
 
 class EtchASketch {
     constructor() {
@@ -87,6 +89,7 @@ class EtchASketch {
         })
     }
 
+
     //sets propertie based on user selection, clears previous grid, fills new grid.
     #interactiveInputRange = function () {
         this.padSize = this.inputRange.value;
@@ -128,12 +131,20 @@ class EtchASketch {
             this.color.g = parseInt(g+g, 16);
             this.color.b = parseInt(b+b, 16);
             
+            this.currentColor();
             return;
           }
         
         this.color.r = parseInt(hex.slice(1, 3), 16);
         this.color.g = parseInt(hex.slice(3, 5), 16);
         this.color.b = parseInt(hex.slice(5, 7), 16);
+        
+        this.currentColor();
+    }
+
+    currentColor = function () {
+        const color = document.querySelector('#currentColor');
+        color.style.backgroundColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
     }
     
 
@@ -148,8 +159,8 @@ class EtchASketch {
 
         } else if (colorSetting.id ==='eraser') {
             this.hexToRGB('#F6F7D7');
-        }
 
+        } this.currentColor();
     }
 
 
@@ -177,6 +188,7 @@ class EtchASketch {
     main = function () {
         this.fillPad();
         this.showGridSize();
+        this.currentColor();
 
         this.inputRange.addEventListener('input', this.#interactiveInputRange.bind(this)); // listens to input 'range'
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
