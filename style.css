@@ -211,6 +211,9 @@ label {
     color: #FF165D;
 }
 
+#sizeRange {
+    margin-bottom: 3vh ;
+}
 
 #sizeRange,#colorOpacity {
     display: flex;
