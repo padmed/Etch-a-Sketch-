@@ -206,6 +206,15 @@ class EtchASketch {
         }
     }
 
+    handleInputRanges = function (event) {
+        if (event.target.id === 'opacityInput') {
+            this.colorOpacityInput(event);
+
+        } else if (event.target.id === 'range') {
+            this.gridSizeInput(event);
+            
+        }
+    }
     
     main = function () {
         this.fillPad();
@@ -213,8 +222,7 @@ class EtchASketch {
         this.selectedColor();
         this.showOpacityValue();
 
-        this.gridSize.addEventListener('input', this.gridSizeInput.bind(this)); // listens to input 'range'
-        this.colorOpacity.addEventListener('input', this.colorOpacityInput.bind(this));
+        this.userSettings.addEventListener('input', this.handleInputRanges.bind(this)); //handles range inputs
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
         this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
