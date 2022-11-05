@@ -177,20 +177,19 @@ img:hover {
     width: 27vh;
     height: 80%;
     align-items: center;
-    border: 1px solid;
 }
 
 #currentColor {
     border: 2px solid #F6F7D7;
-    width: 5vh;
+    width: 6.5vh;
     height: 0px;
-    padding-bottom: 5vh;
+    padding-bottom: 6.5vh;
     border-radius: 50%;
 }
 
-#grid-size {
+
+#grid-size,#opacityValue {
     margin: 0px;
-    align-self: center;
 }
 
 #clear {
@@ -213,7 +212,7 @@ label {
 }
 
 
-#sizeRange {
+#sizeRange,#colorOpacity {
     display: flex;
     flex-direction: column;
     gap: 2vh;
@@ -263,6 +262,9 @@ input[type=radio] {
 
 
 
+#opacityInput,#range {
+    width: 20vh;
+}
 
 
 /* #############slider########### */
@@ -281,7 +283,7 @@ input[type=range]:focus {
 }
   
 input[type=range]::-ms-track {
-    width: 100%;
+    width: 70%;
     cursor: pointer;
 
     /* Hides the slider so custom styles can be added */
