@@ -100,12 +100,25 @@ class EtchASketch {
         this.drawBorders();
     }
 
+    
+    //takes input from user
     colorOpacityInput = function (event) {
         const userInput = event.target;
 
         this.color.a = (userInput.value / 100);
         this.selectedColor();
+        this.showOpacityValue();
     }
+
+
+    //displays color opacity
+    showOpacityValue = function() {
+        const displayOpacity = document.querySelector('#opacityValue');
+        const opacityPercentage = Math.floor(this.color.a * 100);
+
+        displayOpacity.innerHTML = `${opacityPercentage}%`
+    }
+
 
     //displays grid size in the app
     showGridSize = function () {
@@ -149,6 +162,8 @@ class EtchASketch {
         this.selectedColor();
     }
 
+
+    //displays current selected color
     selectedColor = function () {
         const color = document.querySelector('#currentColor');
         color.style.backgroundColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
@@ -196,6 +211,7 @@ class EtchASketch {
         this.fillPad();
         this.showGridSize();
         this.selectedColor();
+        this.showOpacityValue();
 
         this.gridSize.addEventListener('input', this.gridSizeInput.bind(this)); // listens to input 'range'
         this.colorOpacity.addEventListener('input', this.colorOpacityInput.bind(this));
