@@ -224,7 +224,7 @@ label {
     -webkit-text-stroke: 1px #F6F7D7
 }
 
-#sizeRange > label {
+#sizeRange > label,#colorOpacity > label {
     display: flex;
     flex-direction: column;
     justify-content: center;
