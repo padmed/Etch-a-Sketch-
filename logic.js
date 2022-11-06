@@ -221,12 +221,17 @@ class EtchASketch {
         this.showGridSize();
         this.selectedColor();
         this.showOpacityValue();
+        const colorGridFunctionCopy = this.colorSquare.bind(this);
 
         this.userSettings.addEventListener('input', this.handleInputRanges.bind(this)); //handles range inputs
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
         this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
-        this.pad.addEventListener('click', this.colorSquare.bind(this));
+
+        this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', colorGridFunctionCopy));
+        this.pad.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', colorGridFunctionCopy));
+        this.pad.addEventListener('mouseleave', () => this.pad.removeEventListener('mouseover', colorGridFunctionCopy));
+        
         this.userSettings.addEventListener('click', this.handleUserSettings.bind(this));
     }
 
@@ -237,3 +242,10 @@ class EtchASketch {
 
 
 const pad = new EtchASketch();
+
+function miau () {
+    console.log('miau')
+}
+
+pad.pad.addEventListener('mousedown', () => pad.pad.addEventListener('mouseover', miau));
+pad.pad.addEventListener('mouseup', () => pad.pad.removeEventListener('mouseover', miau));
