@@ -6,28 +6,28 @@
     <script src="logic.js" defer></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body ondragstart="return false;" ondrop="return false;">
     <div id="header">
-        <h1 id="title"> Etch-a-Sketch </h1>
+        <h1 id="title" class="unselectable"> Etch-a-Sketch </h1>
     </div>
     <div id="centre">
         <div id="user-settings">
             <div id="currentColor"></div>
             <div id="colorOpacity"> 
-                <label>Col. Opacity: <span id="opacityValue"></span></label>
+                <label class="unselectable">Col. Opacity: <span id="opacityValue"></span></label>
                 <input id="opacityInput" type="range" min="10" max="100" step="1" value="100" autocomplete="off">
             </div>
             <div id="sizeRange"> 
-                <label>Grid size: <span id="grid-size"></span></label>
+                <label class="unselectable">Grid size: <span id="grid-size"></span></label>
                 <input id="range" type="range" min="16" max="70" step="1" value="16">
             </div>
-            <button id="clear" class="button"> Clear pad </button>
-                <fieldset class="option">
+            <button id="clear" class="button unselectable"> Clear pad </button>
+                <fieldset class="option unselectable">
                     <legend>Grid border:</legend>
                     <label class="radio"> on <input type="radio" name="border" value="border-on"></label>
                     <label class="radio"> off <input id="miau" type="radio" name="border" value="border-off" checked="checked" autocomplete="off"></label>
                 </fieldset>
-                <fieldset class="option">
+                <fieldset class="option unselectable">
                     <legend>Draw with:</legend>
                     <label class="radio"> click <input type="radio" name="drawwith" value="click" checked autocomplete="off"></label>
                     <label class="radio"> hover <input type="radio" name="drawwith" value="hover"></label>
@@ -44,7 +44,7 @@
                     <div id="violet" class="color" data-color="#3F3B6C"> </div>
                     <div id="black" class="color" data-color="#000000"> </div>
                 </div>
-                <div id="cusColor-eraser">
+                <div id="cusColor-eraser" class="unselectable">
                     <div id="cusColor">
                         <label>
                             <img src="Img/colorpicker2.png" alt="rgb">

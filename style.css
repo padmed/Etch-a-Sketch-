@@ -5,6 +5,14 @@
     src: url(Font/8-BIT\ WONDER.TTF);
 }
 
+.unselectable {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
 body,html {
     margin: 0px;
     height: 100%;
