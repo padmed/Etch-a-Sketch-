@@ -195,7 +195,6 @@ class EtchASketch {
             this.drawBorders();
 
         } else if (userSetting.name == 'border') {
-
             if (userSetting.value == 'border-on') {
                 this.gridBorders = true;
 
@@ -228,10 +227,9 @@ class EtchASketch {
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
         this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
 
-        this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', colorGridFunctionCopy));
-        this.pad.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', colorGridFunctionCopy));
-        this.pad.addEventListener('mouseleave', () => this.pad.removeEventListener('mouseover', colorGridFunctionCopy));
-        
+        this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', colorGridFunctionCopy)); // Adds listener while mouse press, colors squares
+        window.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', colorGridFunctionCopy)); // removes sketchpad listener after mouse release
+    
         this.userSettings.addEventListener('click', this.handleUserSettings.bind(this));
     }
 
@@ -243,9 +241,3 @@ class EtchASketch {
 
 const pad = new EtchASketch();
 
-function miau () {
-    console.log('miau')
-}
-
-pad.pad.addEventListener('mousedown', () => pad.pad.addEventListener('mouseover', miau));
-pad.pad.addEventListener('mouseup', () => pad.pad.removeEventListener('mouseover', miau));
