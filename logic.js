@@ -227,6 +227,7 @@ class EtchASketch {
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
         this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
 
+        this.pad.addEventListener('mousedown', this.colorSquare.bind(this));
         this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', colorGridFunctionCopy)); // Adds listener while mouse press, colors squares
         window.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', colorGridFunctionCopy)); // removes sketchpad listener after mouse release
     
