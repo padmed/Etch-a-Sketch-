@@ -5,6 +5,7 @@
     <title>Etch-A-Sketch</title>
     <script src="logic.js" defer></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body ondragstart="return false;" ondrop="return false;">
     <div id="header">
@@ -27,15 +28,14 @@
                     <label class="radio"> on <input type="radio" name="border" value="border-on"></label>
                     <label class="radio"> off <input id="miau" type="radio" name="border" value="border-off" checked="checked" autocomplete="off"></label>
                 </fieldset>
-                <fieldset class="option unselectable">
-                    <legend>Draw with:</legend>
-                    <label class="radio"> click <input type="radio" name="drawwith" value="click" checked autocomplete="off"></label>
-                    <label class="radio"> hover <input type="radio" name="drawwith" value="hover"></label>
-                </fieldset>
             </div>
         <div id="middle">
             <div id="color-settings">
-                <div id="colors"> 
+                <div id="undo-redo">
+                    <span id="undo" class="material-symbols-outlined"> undo </span>
+                    <span id="redo" class="material-symbols-outlined">redo</span>
+                </div>
+                <!-- <div id="colors"> 
                     <div id="red" class="color" data-color="#D2001A"> </div>
                     <div id="orange" class="color" data-color="#FD841F"> </div>
                     <div id="yellow" class="color" data-color="#FCE700"> </div>
@@ -43,7 +43,7 @@
                     <div id="blue" class="color" data-color="#3330E4"></div>
                     <div id="violet" class="color" data-color="#3F3B6C"> </div>
                     <div id="black" class="color" data-color="#000000"> </div>
-                </div>
+                </div> -->
                 <div id="cusColor-eraser" class="unselectable">
                     <div id="cusColor">
                         <label>
