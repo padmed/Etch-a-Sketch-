@@ -1,16 +1,3 @@
-// 1. take the size of sketchpad and initialize it in a class (done)
-// 2. make a method for building a grid in sketchpad (done)
-// 3. add listener for grids in sketchpad (done)
-// 4. make a method for coloring grids in sketchpad (done)
-    // 1. be able to choose color (done)
-// 5. make a method to be able to clear sketchpad (done()
-// 6. make option for grid option turn on/off (done)
-// 7. make option to draw with hover or click
-// 8. fix the bug with invisible element
-// 9. Make opacity
-    // 1. when color is choosen display that color in 5 different opacity levels;
-    // 
-
 class EtchASketch {
     constructor() {
         //neccessary elements for application
@@ -35,6 +22,11 @@ class EtchASketch {
         this.padSize = 16; //initialize pad size
         this.gridSize.value = 16; //sets grid size - "input range" at minimum on restart
         this.gridBorders = false; 
+
+
+        //Undo Redo Feature properties
+        this.unprocessedActions = [];
+        this.processedActions = [];
 
         this.main();
     }
@@ -73,7 +65,10 @@ class EtchASketch {
         if(square.classList.contains('grid')) {
             square.setAttribute('style', `background-color: 
             rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`)
-        }
+        };
+        
+        this.markEvent(event);
+
     }
 
 
@@ -214,13 +209,35 @@ class EtchASketch {
             
         }
     }
+
+
+    //undo redo feature functions
+    markEvent = function (event) {
+        this.unprocessedActions.push(event)
+    }
     
+    EventIntoActions = function () {
+        this.processedActions = []; //clearing previous enterances
+
+        this.unprocessedActions.forEach((event) => {
+            if (event.type === 'mousedown') {
+                this.processedActions.push([event]);
+
+            } else {
+                this.processedActions[this.processedActions.length - 1].push(event);
+            }
+        })
+        
+        console.log(this.processedActions);
+    }
+
+
     main = function () {
         this.fillPad();
         this.showGridSize();
         this.selectedColor();
         this.showOpacityValue();
-        const colorGridFunctionCopy = this.colorSquare.bind(this);
+        const colorGridFunctionCopy = this.colorSquare.bind(this); //helps in refering the same object 
 
         this.userSettings.addEventListener('input', this.handleInputRanges.bind(this)); //handles range inputs
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
@@ -232,6 +249,7 @@ class EtchASketch {
         window.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', colorGridFunctionCopy)); // removes sketchpad listener after mouse release
     
         this.userSettings.addEventListener('click', this.handleUserSettings.bind(this));
+        this.pad.addEventListener('mouseup', () => console.log(this.EventIntoActions()));
     }
 
 }
