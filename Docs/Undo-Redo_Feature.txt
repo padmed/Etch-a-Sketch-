@@ -1,0 +1,27 @@
+"Undo Redo" Feature works with next steps:
+
+    1. After every interaction with the sketchpad event is saved in unprocessedActions list, with helper method - markEvent.
+
+    2. For the next step, it is important to transform events saved into unprocessedActions list into seperate actions. 
+       With the help of eventIntoActions method, triggered by 'mouseup' event.
+        
+        1. Each event on sketchpad is 'mousedown' or either 'mouseover'. We can use this information to split 
+           actions into seperate parts. When the event type is 'mousedown' new list is created into actionsStack list, 
+           where all continuous 'mouseover' events are added.
+
+        2. After the process, unprocessedActions list is cleared, to prevent repetitions in actionsStack list.
+    
+    3. When user clicks undo or redo buttons, all the necessary parts are ready for the feature to work, handleUndoRedo 
+       method is triggered which does the main action of removing and adding actions from the actionsStack, and then calls executeUndoRedo method.
+    
+    4. executeUndoRedo method is used to draw the squares according to the data stored in callStack.
+       
+       1. At first the sketchpad is returned to its initial condition, it is cleared and the squares are filled.
+
+       2. We take the squares from the callStack and search for them in html document, with the help of their unique id.
+
+       3. We take square background colors from the callStack and assign them to the squares which are in html document.
+    
+    5. If there's new interaction with sketchpad, redoActionsStack is cleared to prevent unnecessary redo actions.
+
+    6. On the press of clearpad, all stacks are cleared.
