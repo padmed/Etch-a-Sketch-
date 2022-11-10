@@ -1,7 +1,3 @@
-// 1. mark every action in Unprocessedactions
-// 2. process unprocessed actions
-// 3. delete unprocessed actions 
-
 class EtchASketch {
     constructor() {
         //neccessary elements for application
