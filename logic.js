@@ -39,6 +39,8 @@ class EtchASketch {
 
     //creates parent - child div elements, takes grid form with css flexbox 
     fillPad = function () {
+        let squareID = 0; //individual id to each square
+
         for (let height = 1; height <= this.padSize; height++) {
 
             const div = document.createElement('div');
@@ -49,7 +51,10 @@ class EtchASketch {
 
                 const childDiv = document.createElement('div');
                 childDiv.classList.add('grid');
+                childDiv.setAttribute('id', `${squareID}`);
                 div.appendChild(childDiv);
+
+                ++squareID
             }
 
         } this.squares = document.querySelectorAll('.grid'); // initilizes squares in grid after drawing them
@@ -225,23 +230,21 @@ class EtchASketch {
     
     eventIntoActions = function () {
         for (let i = 0; i < this.unprocessedActions.length; i++) {
-            let action = this.unprocessedActions[i];
+            let event = this.unprocessedActions[i];
 
-            if (action.type === 'mousedown') {
-                this.actionStack.push([action]);
+            if (event.type === 'mousedown') {
+                this.actionStack.push([event.target]);
 
             } else {
-                this.actionStack[this.actionStack.length - 1].push(action);
+                this.actionStack[this.actionStack.length - 1].push(event.target);
             }
         }
 
-        // console.log(this.processedActions);
-        // console.log(this.unprocessedActions);
-        this.unprocessedActions = [];
+        this.unprocessedActions = []; //clearing the unprocessed stack to prevent repetition in actionStack
     }
 
     handleUndoRedo = function (event) {
-        if (event.target.id === 'undo') {
+        if (event.target.id === 'undo' && this.actionStack.length > 0) {
             const undoAction = this.actionStack.pop()
             this.undoedActions.push(undoAction);
 
@@ -249,10 +252,29 @@ class EtchASketch {
             const redoAction = this.undoedActions.pop();
             this.actionStack.push(redoAction)
         }
-        
-        console.log(this.actionStack)
 
+        this.executeUndoRedo();
     }
+
+    //draws squares according to actionStack
+    executeUndoRedo = function () {
+        this.clearPad();
+        this.fillPad();
+
+        if (this.gridBorders) { //if grid border option is inputed this will draw borders
+            this.drawBorders();
+        }
+
+        this.actionStack.forEach((action) => {
+            for (let square = 0; square < action.length; square++) {
+                const squareFromStack = action[square];
+                const squareFromHtml = document.getElementById(squareFromStack.id);
+
+                squareFromHtml.style.backgroundColor = squareFromStack.style.backgroundColor;
+            }
+        })
+    }
+
 
     main = function () {
         this.fillPad();
