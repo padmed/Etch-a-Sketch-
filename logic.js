@@ -1,3 +1,7 @@
+// 1. mark every action in Unprocessedactions
+// 2. process unprocessed actions
+// 3. delete unprocessed actions 
+
 class EtchASketch {
     constructor() {
         //neccessary elements for application
@@ -6,7 +10,7 @@ class EtchASketch {
         this.userSettings = document.getElementById('user-settings'); //parent element for all user settings section
         this.invisibleElement = document.getElementById('invisibleElement'); 
         this.SketchPadSizeText = document.getElementById('grid-size'); //container for displaying sketchpad size
-        this.colorSettings = document.getElementById('color-settings') //parent element for all color settings
+        this.topSettings = document.getElementById('color-settings') //parent element for all color settings
         this.squares = null; // all square elements, initializes later after function draws them
         this.colorOpacity = document.querySelector('#opacityInput');
         
@@ -21,12 +25,13 @@ class EtchASketch {
 
         this.padSize = 16; //initialize pad size
         this.gridSize.value = 16; //sets grid size - "input range" at minimum on restart
-        this.gridBorders = false; 
+        this.gridBorders = false;
 
 
         //Undo Redo Feature properties
         this.unprocessedActions = [];
-        this.processedActions = [];
+        this.actionStack = [];
+        this.undoedActions = [];
 
         this.main();
     }
@@ -165,19 +170,21 @@ class EtchASketch {
     }
     
 
-    handleColorSettings = function (event) {
-        const colorSetting = event.target;
+    handleTopSettings = function (event) {
+        const topSetting = event.target;
 
-        if (colorSetting.id === 'rgb') {
-            colorSetting.oninput = () =>  this.hexToRGB(colorSetting.value);
+        if (topSetting.id === 'rgb') {
+            topSetting.oninput = () =>  this.hexToRGB(topSetting.value);
 
-        } else if (colorSetting.classList.contains('color')) {
-            this.hexToRGB(colorSetting.getAttribute('data-color'));
+        } else if (topSetting.classList.contains('color')) {
+            this.hexToRGB(topSetting.getAttribute('data-color'));
 
-        } else if (colorSetting.id ==='eraser') {
+        } else if (topSetting.id ==='eraser') {
             this.hexToRGB('#F6F7D7');
 
-        } 
+        } else if (topSetting.id === 'undo' || topSetting.id === 'redo') {
+            this.handleUndoRedo(event);
+        }
     }
 
 
@@ -216,21 +223,34 @@ class EtchASketch {
         this.unprocessedActions.push(event)
     }
     
-    EventIntoActions = function () {
-        this.processedActions = []; //clearing previous enterances
+    eventIntoActions = function () {
+        for (let i = 0; i < this.unprocessedActions.length; i++) {
+            let action = this.unprocessedActions[i];
 
-        this.unprocessedActions.forEach((event) => {
-            if (event.type === 'mousedown') {
-                this.processedActions.push([event]);
+            if (action.type === 'mousedown') {
+                this.actionStack.push([action]);
 
             } else {
-                this.processedActions[this.processedActions.length - 1].push(event);
+                this.actionStack[this.actionStack.length - 1].push(action);
             }
-        })
-        
-        console.log(this.processedActions);
+        }
+
+        // console.log(this.processedActions);
+        // console.log(this.unprocessedActions);
+        this.unprocessedActions = [];
     }
 
+    handleUndoRedo = function (event) {
+        
+        if (event.target.id === 'undo') {
+            const undoedAction = this.actionStack.pop()
+            this.undoedActions.push(undoedAction);
+
+        } 
+        
+        console.log(this.actionStack)
+
+    }
 
     main = function () {
         this.fillPad();
@@ -242,14 +262,15 @@ class EtchASketch {
         this.userSettings.addEventListener('input', this.handleInputRanges.bind(this)); //handles range inputs
         invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
         window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
-        this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
+        this.topSettings.addEventListener('click', this.handleTopSettings.bind(this));
 
         this.pad.addEventListener('mousedown', this.colorSquare.bind(this));
         this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', colorGridFunctionCopy)); // Adds listener while mouse press, colors squares
         window.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', colorGridFunctionCopy)); // removes sketchpad listener after mouse release
     
         this.userSettings.addEventListener('click', this.handleUserSettings.bind(this));
-        this.pad.addEventListener('mouseup', () => console.log(this.EventIntoActions()));
+
+        this.pad.addEventListener('mouseup', () => this.eventIntoActions());
     }
 
 }
