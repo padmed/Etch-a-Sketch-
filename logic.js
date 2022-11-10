@@ -188,9 +188,6 @@ class EtchASketch {
 
         } else if (topSetting.id ==='eraser') {
             this.hexToRGB('#F6F7D7');
-
-        } else if (topSetting.id === 'undo' || topSetting.id === 'redo') {
-            this.handleUndoRedo(event);
         }
     }
 
@@ -211,6 +208,9 @@ class EtchASketch {
                 this.gridBorders = false;
 
             } this.drawBorders(); //if there's event on grid-border option, this function takes radio input value, sets boolean based on input and calls function which draws border based on that boolean.
+
+        } else if (userSetting.id === 'undo' || userSetting.id === 'redo') {
+            this.handleUndoRedo(event);
         }
     }
 

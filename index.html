@@ -23,19 +23,19 @@
                 <input id="range" type="range" min="16" max="70" step="1" value="16">
             </div>
             <button id="clear" class="button unselectable"> Clear pad </button>
+            <div id ="undo-redo">
+                <button id="undo" class="small button"> undo <span id="undo" class="material-symbols-outlined"> undo </span></button>
+                <button id="redo" class="small button"> redo <span id="redo" class="material-symbols-outlined">redo</span></button>
+            </div>
                 <fieldset class="option unselectable">
                     <legend>Grid border:</legend>
                     <label class="radio"> on <input type="radio" name="border" value="border-on"></label>
-                    <label class="radio"> off <input id="miau" type="radio" name="border" value="border-off" checked="checked" autocomplete="off"></label>
+                    <label class="radio"> off <input type="radio" name="border" value="border-off" checked="checked" autocomplete="off"></label>
                 </fieldset>
             </div>
         <div id="middle">
             <div id="color-settings">
-                <div id="undo-redo">
-                    <span id="undo" class="material-symbols-outlined"> undo </span>
-                    <span id="redo" class="material-symbols-outlined">redo</span>
-                </div>
-                <!-- <div id="colors"> 
+                <div id="colors"> 
                     <div id="red" class="color" data-color="#D2001A"> </div>
                     <div id="orange" class="color" data-color="#FD841F"> </div>
                     <div id="yellow" class="color" data-color="#FCE700"> </div>
@@ -43,7 +43,7 @@
                     <div id="blue" class="color" data-color="#3330E4"></div>
                     <div id="violet" class="color" data-color="#3F3B6C"> </div>
                     <div id="black" class="color" data-color="#000000"> </div>
-                </div> -->
+                </div>
                 <div id="cusColor-eraser" class="unselectable">
                     <div id="cusColor">
                         <label>
