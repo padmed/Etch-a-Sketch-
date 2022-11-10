@@ -65,6 +65,9 @@ class EtchASketch {
     clearPad = function () {
         const toRemove = document.querySelectorAll('.parentDiv');
         toRemove.forEach((element) => element.remove());
+        this.unprocessedActions = [];
+        this.actionStack = [];
+        this.undoedActions = [];
     }
 
 
@@ -103,6 +106,9 @@ class EtchASketch {
         this.fillPad();
         this.showGridSize();
         this.drawBorders();
+        this.actionStack = [];
+        this.unprocessedActions = [];
+        this.undoedActions = [];
     }
 
     
@@ -258,10 +264,12 @@ class EtchASketch {
 
     //draws squares according to actionStack
     executeUndoRedo = function () {
-        this.clearPad();
+        const toRemove = document.querySelectorAll('.parentDiv'); //clears sketchpad withoy modyfing actionStack
+        toRemove.forEach((element) => element.remove());
+
         this.fillPad();
 
-        if (this.gridBorders) { //if grid border option is inputed this will draw borders
+        if (this.gridBorders) { //if grid border option is choosen this will draw borders
             this.drawBorders();
         }
 
@@ -270,7 +278,7 @@ class EtchASketch {
                 const squareFromStack = action[square];
                 const squareFromHtml = document.getElementById(squareFromStack.id);
 
-                squareFromHtml.style.backgroundColor = squareFromStack.style.backgroundColor;
+                squareFromHtml.style.backgroundColor = squareFromStack.style.backgroundColor; //colors matching squares with user's previous actions
             }
         })
     }
