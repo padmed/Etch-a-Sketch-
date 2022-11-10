@@ -73,7 +73,7 @@ class EtchASketch {
         };
         
         this.markEvent(event);
-
+        this.undoedActions = []; //clears redo stack
     }
 
 
@@ -241,12 +241,14 @@ class EtchASketch {
     }
 
     handleUndoRedo = function (event) {
-        
         if (event.target.id === 'undo') {
-            const undoedAction = this.actionStack.pop()
-            this.undoedActions.push(undoedAction);
+            const undoAction = this.actionStack.pop()
+            this.undoedActions.push(undoAction);
 
-        } 
+        } else if (event.target.id === 'redo' && this.undoedActions.length > 0) {
+            const redoAction = this.undoedActions.pop();
+            this.actionStack.push(redoAction)
+        }
         
         console.log(this.actionStack)
 
