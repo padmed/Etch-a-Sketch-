@@ -27,7 +27,7 @@ class EtchASketch {
         //Undo Redo Feature properties
         this.unprocessedActions = [];
         this.actionStack = [];
-        this.undoedActions = [];
+        this.redoActionsStack = [];
 
         this.main();
     }
@@ -63,7 +63,7 @@ class EtchASketch {
         toRemove.forEach((element) => element.remove());
         this.unprocessedActions = [];
         this.actionStack = [];
-        this.undoedActions = [];
+        this.redoActionsStack = [];
     }
 
 
@@ -77,7 +77,7 @@ class EtchASketch {
         };
         
         this.markEvent(event);
-        this.undoedActions = []; //clears redo stack
+        this.redoActionsStack = []; //clears redo stack
     }
 
 
@@ -104,7 +104,7 @@ class EtchASketch {
         this.drawBorders();
         this.actionStack = [];
         this.unprocessedActions = [];
-        this.undoedActions = [];
+        this.redoActionsStack = [];
     }
 
     
@@ -214,6 +214,7 @@ class EtchASketch {
         }
     }
 
+
     handleInputRanges = function (event) {
         if (event.target.id === 'opacityInput') {
             this.colorOpacityInput(event);
@@ -245,18 +246,20 @@ class EtchASketch {
         this.unprocessedActions = []; //clearing the unprocessed stack to prevent repetition in actionStack
     }
 
+
     handleUndoRedo = function (event) {
         if (event.target.id === 'undo' && this.actionStack.length > 0) {
             const undoAction = this.actionStack.pop()
-            this.undoedActions.push(undoAction);
+            this.redoActionsStack.push(undoAction);
 
-        } else if (event.target.id === 'redo' && this.undoedActions.length > 0) {
-            const redoAction = this.undoedActions.pop();
+        } else if (event.target.id === 'redo' && this.redoActionsStack.length > 0) {
+            const redoAction = this.redoActionsStack.pop();
             this.actionStack.push(redoAction)
         }
 
         this.executeUndoRedo();
     }
+
 
     //draws squares according to actionStack
     executeUndoRedo = function () {
