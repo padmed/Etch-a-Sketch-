@@ -171,11 +171,6 @@ img:hover {
     flex-direction: column;
 }
 
-.invisibleElement {
-    width: 20vh;
-    height: 70vh;
-}
-
 .parentDiv {
     display: flex;
     height: 100%;
@@ -238,10 +233,11 @@ img:hover {
 .small.button {
     width: 45%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: center;
+    align-items: center;
+    height: 5vh;
     font-size: 1.2vh;
-    height: 4.4vh;
 
 }
 
@@ -424,3 +420,9 @@ input[type=range]:focus::-ms-fill-upper {
     background: #FF9A00;
 }
 
+.invisibleElement {
+    width: 27vh;
+    height: 80%;
+    border: 1px solid;
+    margin-left: 8vh;
+}
