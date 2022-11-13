@@ -30,6 +30,12 @@ class SketchPad {
         } this.squares = document.querySelectorAll('.grid'); // initilizes squares in grid after drawing them
     }
 
+    //clears grid
+    clearPad = function () {
+        const toRemove = document.querySelectorAll('.parentDiv');
+        toRemove.forEach((element) => element.remove());
+    }
+    
     // // colors squares, takes rgba value
     // colorSquare = function (event) {
     //     let square = event.target;
