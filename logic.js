@@ -4,7 +4,6 @@ class EtchASketch {
         this.pad = document.getElementById('draw-box');
         this.gridSize = document.getElementById('range'); // "input range" element
         this.userSettings = document.getElementById('user-settings'); //parent element for all user settings section
-        this.invisibleElement = document.getElementById('invisibleElement'); 
         this.SketchPadSizeText = document.getElementById('grid-size'); //container for displaying sketchpad size
         this.topSettings = document.getElementById('color-settings') //parent element for all color settings
         this.squares = null; // all square elements, initializes later after function draws them
@@ -19,6 +18,7 @@ class EtchASketch {
             a: 1.0
         };
 
+        this.colorStack = [];
         this.padSize = 16; //initialize pad size
         this.gridSize.value = 16; //sets grid size - "input range" at minimum on restart
         this.gridBorders = false;
@@ -80,6 +80,18 @@ class EtchASketch {
         this.redoActionsStack = []; //clears redo stack
     }
 
+    fillColorStack = function (color) {
+        if (this.colorStack.length >= 5) {
+            this.colorStack.shift();
+        }
+        this.colorStack.push(color);
+        console.log(this.colorStack);
+    }
+        
+    fillRecColors = function () {
+        const recColorContainers = document.getElementsByClassName('recentColor');
+        console.log(recColorContainers) 
+    }
 
     // draws borders around the squares
     drawBorders = function () {
@@ -133,20 +145,6 @@ class EtchASketch {
     }
 
 
-    // removes/adds invisible element based on window size
-    #manipulateInvisibleElement = function () {
-        const windowWidth = document.documentElement.clientWidth;
-        const windowHeight = document.documentElement.clientHeight;
-
-        if (windowHeight <= 821 && windowWidth <= 1102 ) {
-            invisibleElement.classList.remove('invisibleElement');
-
-        } else {
-            invisibleElement.classList.add('invisibleElement');
-        }
-    }
-
-
     // converts hex value to rgb, so later to be able to adjust pencil color opacity
     hexToRGB = function (hex) {
         if (hex.length === 4) {
@@ -157,8 +155,8 @@ class EtchASketch {
             this.color.r = parseInt(r+r, 16);
             this.color.g = parseInt(g+g, 16);
             this.color.b = parseInt(b+b, 16);
-            
-            this.selectedColor();
+
+            this.fillColorStack(`rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`);
             return;
           }
         
@@ -166,14 +164,16 @@ class EtchASketch {
         this.color.g = parseInt(hex.slice(3, 5), 16);
         this.color.b = parseInt(hex.slice(5, 7), 16);
         
-        this.selectedColor();
+
+        // this.fillColorStack(`rgb(${this.color.r}, ${this.color.g}, ${this.color.b})`);
+        // this.fillRecColors();
     }
 
 
     //displays current selected color
     selectedColor = function () {
         const color = document.querySelector('#currentColor');
-        color.style.backgroundColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
+        color.style.backgroundColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`;
     }
     
 
@@ -181,7 +181,10 @@ class EtchASketch {
         const topSetting = event.target;
 
         if (topSetting.id === 'rgb') {
-            topSetting.oninput = () =>  this.hexToRGB(topSetting.value);
+            topSetting.oninput = () =>  {
+                this.hexToRGB(topSetting.value);
+                this.selectedColor();
+            }
 
         } else if (topSetting.classList.contains('color')) {
             this.hexToRGB(topSetting.getAttribute('data-color'));
@@ -189,6 +192,8 @@ class EtchASketch {
         } else if (topSetting.id ==='eraser') {
             this.hexToRGB('#F6F7D7');
         }
+
+        this.selectedColor();
     }
 
 
@@ -291,8 +296,6 @@ class EtchASketch {
         const colorGridFunctionCopy = this.colorSquare.bind(this); //helps in refering the same object 
 
         this.userSettings.addEventListener('input', this.handleInputRanges.bind(this)); //handles range inputs
-        invisibleElement.classList.add('invisibleElement'); //adds invisible element on program startup
-        window.addEventListener('resize', this.#manipulateInvisibleElement); // listens for window resize
         this.topSettings.addEventListener('click', this.handleTopSettings.bind(this));
 
         this.pad.addEventListener('mousedown', this.colorSquare.bind(this));
