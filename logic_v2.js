@@ -4,10 +4,8 @@ class SketchPad {
         this.padSize = size;
         this.squares = null; // all square elements, initializes later after function draws them
         this.pencilColor = color;
-        this.gridBorders = true;
         this.colorGridFunctionCopy = this.colorSquare.bind(this); //helps in refering the same object 
     }
-
 
     //creates parent - child div elements, takes grid form with css flexbox 
     fillPad = function () {
@@ -48,22 +46,8 @@ class SketchPad {
         };
     }
 
-    // draws borders around the squares
-    drawBorders = function () {
-        this.squares.forEach((square) => {
-
-            if (this.gridBorders) {
-                square.classList.add('gridBorder');
-
-            } else if (!this.gridBorders) {
-                square.classList.remove('gridBorder')
-            }
-        })
-    }
-
     executeSketchPad = function () {
         this.fillPad();
-        this.drawBorders();
 
         this.pad.addEventListener('mousedown', this.colorSquare.bind(this));
         this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', this.colorGridFunctionCopy)); // Adds listener while mouse press, colors squares
