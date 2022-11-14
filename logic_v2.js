@@ -158,7 +158,7 @@ class ColorSettings {
         this.color.b = parseInt(hex.slice(5, 7), 16);
     }
 
-    selectedColor = function () {
+    showSelectedColor = function () {
         const color = document.querySelector('#currentColor');
         color.style.backgroundColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`;
     }
@@ -169,23 +169,21 @@ class ColorSettings {
         if (colorSetting.id === 'rgb') {
             colorSetting.oninput = () =>  {
                 this.hexToRGB(colorSetting.value);
-                this.selectedColor();
-                console.log(this.color)
+                this.showSelectedColor();
             }
+
+        } else if (colorSetting.classList.contains('color')) {
+            this.hexToRGB(colorSetting.getAttribute('data-color'));  
+
+        } else if (colorSetting.id ==='eraser') {
+            this.hexToRGB('#F6F7D7');
         }
 
-    //     } else if (colorSetting.classList.contains('color')) {
-    //         this.hexToRGB(colorSetting.getAttribute('data-color'));
-
-    //     } else if (colorSetting.id ==='eraser') {
-    //         this.hexToRGB('#F6F7D7');
-    //     }
-
-    //     this.selectedColor();
+        this.showSelectedColor();
     }
 
     executeColorSettings = function () {
-        this.selectedColor();
+        this.showSelectedColor();
         this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
     }
 }
