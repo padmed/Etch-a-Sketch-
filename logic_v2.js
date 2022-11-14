@@ -63,16 +63,18 @@ class UserSettings {
         this.sketchPad = objContext.sketchPad;
         this.userSettings = document.getElementById('user-settings'); //parent element for all user settings section
         this.gridSize = document.getElementById('range'); // "input range" element
-        this.gridBorder = 'true';
-
+        this.gridBorder = 'false';
+        this.gridSize.value = 16; //sets grid size - "input range" at minimum on restart
     }
 
-    gridSizeInput = function () {
-        this.sketchPad.padSize = this.gridSize.value;
-        this.sketchPad.clearPad();
-        this.sketchPad.fillPad();
-        this.showGridSize();
-        this.drawBorders();
+    gridSizeInput = function (event) {
+        if (event.target.id === 'range') {   
+            this.sketchPad.padSize = this.gridSize.value;
+            this.sketchPad.clearPad();
+            this.sketchPad.fillPad();
+            this.showGridSize();
+            this.drawBorders();
+        }
         // this.actionStack = [];
         // this.unprocessedActions = [];
         // this.redoActionsStack = [];
@@ -117,24 +119,11 @@ class UserSettings {
         //     this.handleUndoRedo(event);
         // }
     }
-    
-    handleInputRanges = function (event) {
-        // if (event.target.id === 'opacityInput') {
-        //     this.colorOpacityInput(event);
-
-        // } else if (event.target.id === 'range') {
-        //     this.gridSizeInput(event);
-            
-        // }
-        if (event.target.id === 'range') {
-            this.gridSizeInput(event);    
-        }
-    }
-
 
     executeUserSettings = function () {
-        this.userSettings.addEventListener('input', this.handleInputRanges.bind(this)); //handles range inputs
+        this.userSettings.addEventListener('input', this.gridSizeInput.bind(this));
         this.userSettings.addEventListener('click', this.handleUserSettings.bind(this));
+        this.showGridSize();
     }
 }
 
