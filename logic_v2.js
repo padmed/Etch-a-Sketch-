@@ -33,6 +33,7 @@ class SketchPad {
     //clears grid
     clearPad = function () {
         const toRemove = document.querySelectorAll('.parentDiv');
+
         toRemove.forEach((element) => element.remove());
     }
     
@@ -130,7 +131,62 @@ class UserSettings {
 
 class ColorSettings {
     constructor() {
+        this.colorSettings = document.getElementById('color-settings') //parent element for all color settings
+        this.color = {
+            r: 0,
+            g: 0,
+            b: 0,
+            a: 1.0
+        };
+    }
+
+    hexToRGB = function (hex) {
+        if (hex.length === 4) {
+            let r = hex.slice(1,2);
+            let g = hex.slice(2,3);
+            let b = hex.slice(3,4);
+          
+            this.color.r = parseInt(r+r, 16);
+            this.color.g = parseInt(g+g, 16);
+            this.color.b = parseInt(b+b, 16);
+
+            return;
+          }
         
+        this.color.r = parseInt(hex.slice(1, 3), 16);
+        this.color.g = parseInt(hex.slice(3, 5), 16);
+        this.color.b = parseInt(hex.slice(5, 7), 16);
+    }
+
+    selectedColor = function () {
+        const color = document.querySelector('#currentColor');
+        color.style.backgroundColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`;
+    }
+
+    handleColorSettings = function (event) {
+        const colorSetting = event.target;
+
+        if (colorSetting.id === 'rgb') {
+            colorSetting.oninput = () =>  {
+                this.hexToRGB(colorSetting.value);
+                this.selectedColor();
+                console.log(this.color)
+            }
+        }
+
+    //     } else if (colorSetting.classList.contains('color')) {
+    //         this.hexToRGB(colorSetting.getAttribute('data-color'));
+
+    //     } else if (colorSetting.id ==='eraser') {
+    //         this.hexToRGB('#F6F7D7');
+    //     }
+
+    //     this.selectedColor();
+    }
+
+    executeColorSettings = function () {
+        this.selectedColor();
+        this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
     }
 }
 
@@ -139,14 +195,16 @@ class ColorSettings {
 class Main {
     constructor () {
         this.objContext = this;
+        
         this.sketchPad = new SketchPad(16, 'red');
         this.userSettings = new UserSettings(this.objContext);
-        this.colorGridFunctionCopy = this.sketchPad.colorSquare.bind(this); //helps in refering the same object
+        this.colorSettings = new ColorSettings();
     }
 
     execute = function () {
         this.sketchPad.executeSketchPad();
         this.userSettings.executeUserSettings();
+        this.colorSettings.executeColorSettings();
         
     }
 }
