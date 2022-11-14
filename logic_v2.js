@@ -1,8 +1,11 @@
 class SketchPad {
-    constructor(size) {
+    constructor(size, color) {
         this.pad = document.getElementById('draw-box');
         this.padSize = size;
         this.squares = null; // all square elements, initializes later after function draws them
+        this.pencilColor = color;
+        this.gridBorders = true;
+        this.colorGridFunctionCopy = this.colorSquare.bind(this); //helps in refering the same object 
     }
 
 
@@ -22,7 +25,6 @@ class SketchPad {
                 childDiv.classList.add('grid');
                 childDiv.setAttribute('id', `${squareID}`);
                 div.appendChild(childDiv);
-                childDiv.style.border = '1px solid'
 
                 ++squareID
             }
@@ -36,45 +38,38 @@ class SketchPad {
         toRemove.forEach((element) => element.remove());
     }
     
-    // // colors squares, takes rgba value
-    // colorSquare = function (event) {
-    //     let square = event.target;
+    // colors squares, takes rgba value
+    colorSquare = function (event) {
+        let square = event.target;
 
-    //     if(square.classList.contains('grid')) {
-    //         square.setAttribute('style', `background-color: 
-    //         rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`)
-    //     };
-        
-    //     this.markEvent(event);
-    //     this.redoActionsStack = []; //clears redo stack
-    // }
+        if(square.classList.contains('grid')) {
+            square.setAttribute('style', `background-color: 
+            black`)
+        };
+    }
 
-    // // draws borders around the squares
-    // drawBorders = function () {
-    //     this.squares.forEach((square) => {
+    // draws borders around the squares
+    drawBorders = function () {
+        this.squares.forEach((square) => {
 
-    //         if (this.gridBorders) {
-    //             square.classList.add('gridBorder');
+            if (this.gridBorders) {
+                square.classList.add('gridBorder');
 
-    //         } else if (!this.gridBorders) {
-    //             square.classList.remove('gridBorder')
-    //         }
-    //     })
-    // }
+            } else if (!this.gridBorders) {
+                square.classList.remove('gridBorder')
+            }
+        })
+    }
 
+    executeSketchPad = function () {
+        this.fillPad();
+        this.drawBorders();
 
-    // //sets propertie based on user selection, clears previous grid, fills new grid.
-    // gridSizeInput = function () {
-    //     this.padSize = this.gridSize.value;
-    //     this.clearPad();
-    //     this.fillPad();
-    //     this.showGridSize();
-    //     this.drawBorders();
-    //     this.actionStack = [];
-    //     this.unprocessedActions = [];
-    //     this.redoActionsStack = [];
-    // }
+        this.pad.addEventListener('mousedown', this.colorSquare.bind(this));
+        this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', this.colorGridFunctionCopy)); // Adds listener while mouse press, colors squares
+        window.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', this.colorGridFunctionCopy)); // removes sketchpad listener after mouse release
 
+    }
 }
 
 
@@ -83,14 +78,16 @@ class SketchPad {
 
 class Main {
     constructor () {
-        this.sketchPad = new SketchPad(16);
-        this.execute();
+        this.sketchPad = new SketchPad(16, 'red');
+        this.colorGridFunctionCopy = this.sketchPad.colorSquare.bind(this); //helps in refering the same object 
+
     }
 
     execute = function () {
-        this.sketchPad.fillPad();
+        this.sketchPad.executeSketchPad();
     }
 }
 
 
 const main = new Main();
+main.execute();
