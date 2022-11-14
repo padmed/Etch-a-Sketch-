@@ -83,12 +83,18 @@ class UserSettings {
         this.that.sketchPad.padSize = this.gridSize.value;
         this.that.sketchPad.clearPad();
         this.that.sketchPad.fillPad();
-        // this.showGridSize();
+        this.showGridSize();
         // this.drawBorders();
         // this.actionStack = [];
         // this.unprocessedActions = [];
         // this.redoActionsStack = [];
     }
+
+    //displays grid size in the app
+    showGridSize = function () {
+        document.getElementById('grid-size').innerHTML = `${this.that.sketchPad.padSize}X${this.that.sketchPad.padSize}`;
+    }
+    
 
     executeUserSettings = function () {
         this.userSettings.addEventListener('input', this.handleInputRanges.bind(this)); //handles range inputs
