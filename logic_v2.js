@@ -58,17 +58,58 @@ class SketchPad {
 
 
 
+class UserSettings {
+    constructor (objContext) {
+        this.userSettings = document.getElementById('user-settings'); //parent element for all user settings section
+        this.that = objContext;
+        this.gridSize = document.getElementById('range'); // "input range" element
+
+    }
+
+    handleInputRanges = function (event) {
+        // if (event.target.id === 'opacityInput') {
+        //     this.colorOpacityInput(event);
+
+        // } else if (event.target.id === 'range') {
+        //     this.gridSizeInput(event);
+            
+        // }
+        if (event.target.id === 'range') {
+            this.gridSizeInput(event);    
+        }
+    }
+
+    gridSizeInput = function () {
+        this.that.sketchPad.padSize = this.gridSize.value;
+        this.that.sketchPad.clearPad();
+        this.that.sketchPad.fillPad();
+        // this.showGridSize();
+        // this.drawBorders();
+        // this.actionStack = [];
+        // this.unprocessedActions = [];
+        // this.redoActionsStack = [];
+    }
+
+    executeUserSettings = function () {
+        this.userSettings.addEventListener('input', this.handleInputRanges.bind(this)); //handles range inputs
+    }
+}
+
+
 
 
 class Main {
     constructor () {
+        this.objContext = this;
         this.sketchPad = new SketchPad(16, 'red');
-        this.colorGridFunctionCopy = this.sketchPad.colorSquare.bind(this); //helps in refering the same object 
-
+        this.userSettings = new UserSettings(this.objContext);
+        this.colorGridFunctionCopy = this.sketchPad.colorSquare.bind(this); //helps in refering the same object
     }
 
     execute = function () {
         this.sketchPad.executeSketchPad();
+        this.userSettings.executeUserSettings();
+        
     }
 }
 
