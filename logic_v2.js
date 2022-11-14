@@ -60,8 +60,8 @@ class SketchPad {
 
 class UserSettings {
     constructor (objContext) {
+        this.sketchPad = objContext.sketchPad;
         this.userSettings = document.getElementById('user-settings'); //parent element for all user settings section
-        this.that = objContext;
         this.gridSize = document.getElementById('range'); // "input range" element
 
     }
@@ -80,9 +80,9 @@ class UserSettings {
     }
 
     gridSizeInput = function () {
-        this.that.sketchPad.padSize = this.gridSize.value;
-        this.that.sketchPad.clearPad();
-        this.that.sketchPad.fillPad();
+        this.sketchPad.padSize = this.gridSize.value;
+        this.sketchPad.clearPad();
+        this.sketchPad.fillPad();
         this.showGridSize();
         // this.drawBorders();
         // this.actionStack = [];
@@ -92,12 +92,49 @@ class UserSettings {
 
     //displays grid size in the app
     showGridSize = function () {
-        document.getElementById('grid-size').innerHTML = `${this.that.sketchPad.padSize}X${this.that.sketchPad.padSize}`;
+        document.getElementById('grid-size').innerHTML = `${this.sketchPad.padSize}X${this.sketchPad.padSize}`;
     }
+
+    // // draws borders around the squares
+    // drawBorders = function () {
+    //     this.that.sketchPad.forEach((square) => {
+
+    //         if (this.gridBorders) {
+    //             square.classList.add('gridBorder');
+
+    //         } else if (!this.gridBorders) {
+    //             square.classList.remove('gridBorder')
+    //         }
+    //     })
+    // }
+
+    // handleUserSettings = function (event) {
+    //     const userSetting = event.target;
+
+    //     if (userSetting.id == 'clear') {
+    //         this.clearPad();
+    //         this.fillPad();
+    //         this.drawBorders();
+
+    //     } else if (userSetting.name == 'border') {
+    //         if (userSetting.value == 'border-on') {
+    //             this.gridBorders = true;
+
+    //         } else {
+    //             this.gridBorders = false;
+
+    //         } this.drawBorders(); //if there's event on grid-border option, this function takes radio input value, sets boolean based on input and calls function which draws border based on that boolean.
+
+    //     } else if (userSetting.id === 'undo' || userSetting.id === 'redo') {
+    //         this.handleUndoRedo(event);
+    //     }
+    // }
+    
     
 
     executeUserSettings = function () {
         this.userSettings.addEventListener('input', this.handleInputRanges.bind(this)); //handles range inputs
+        // this.userSettings.addEventListener('click', this.handleUserSettings.bind(this));
     }
 }
 
