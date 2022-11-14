@@ -42,7 +42,7 @@ class SketchPad {
 
         if(square.classList.contains('grid')) {
             square.setAttribute('style', `background-color: 
-            black`)
+            ${this.pencilColor}`)
         };
     }
 
@@ -127,6 +127,12 @@ class UserSettings {
     }
 }
 
+
+class ColorSettings {
+    constructor() {
+        
+    }
+}
 
 
 
