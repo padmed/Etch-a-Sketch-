@@ -130,8 +130,9 @@ class UserSettings {
 
 
 class ColorSettings {
-    constructor() {
+    constructor(objContext) {
         this.colorSettings = document.getElementById('color-settings') //parent element for all color settings
+        this.sketchPad = objContext.sketchPad;
         this.color = {
             r: 0,
             g: 0,
@@ -170,6 +171,8 @@ class ColorSettings {
             colorSetting.oninput = () =>  {
                 this.hexToRGB(colorSetting.value);
                 this.showSelectedColor();
+                this.sketchPad.pencilColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 1)`
+                return;
             }
 
         } else if (colorSetting.classList.contains('color')) {
@@ -180,6 +183,7 @@ class ColorSettings {
         }
 
         this.showSelectedColor();
+        this.sketchPad.pencilColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 1)`
     }
 
     executeColorSettings = function () {
@@ -196,7 +200,7 @@ class Main {
         
         this.sketchPad = new SketchPad(16, 'red');
         this.userSettings = new UserSettings(this.objContext);
-        this.colorSettings = new ColorSettings();
+        this.colorSettings = new ColorSettings(this.objContext);
     }
 
     execute = function () {
