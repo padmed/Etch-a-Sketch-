@@ -63,9 +63,61 @@ class UserSettings {
         this.sketchPad = objContext.sketchPad;
         this.userSettings = document.getElementById('user-settings'); //parent element for all user settings section
         this.gridSize = document.getElementById('range'); // "input range" element
+        this.gridBorder = 'true';
 
     }
 
+    gridSizeInput = function () {
+        this.sketchPad.padSize = this.gridSize.value;
+        this.sketchPad.clearPad();
+        this.sketchPad.fillPad();
+        this.showGridSize();
+        this.drawBorders();
+        // this.actionStack = [];
+        // this.unprocessedActions = [];
+        // this.redoActionsStack = [];
+    }
+
+    //displays grid size in the app
+    showGridSize = function () {
+        document.getElementById('grid-size').innerHTML = `${this.sketchPad.padSize}X${this.sketchPad.padSize}`;
+    }
+
+    // draws borders around the squares
+    drawBorders = function () {
+        this.sketchPad.squares.forEach((square) => {
+
+            if (this.gridBorders) {
+                square.classList.add('gridBorder');
+
+            } else if (!this.gridBorders) {
+                square.classList.remove('gridBorder')
+            }
+        })
+    }
+
+    handleUserSettings = function (event) {
+        const userSetting = event.target;
+
+        if (userSetting.id == 'clear') {
+            this.sketchPad.clearPad();
+            this.sketchPad.fillPad();
+            this.drawBorders();
+
+        } else if (userSetting.name == 'border') {
+            if (userSetting.value == 'border-on') {
+                this.gridBorders = true;
+
+            } else {
+                this.gridBorders = false;
+
+            } this.drawBorders(); //if there's event on grid-border option, this function takes radio input value, sets boolean based on input and calls function which draws border based on that boolean.
+        } 
+        // } else if (userSetting.id === 'undo' || userSetting.id === 'redo') {
+        //     this.handleUndoRedo(event);
+        // }
+    }
+    
     handleInputRanges = function (event) {
         // if (event.target.id === 'opacityInput') {
         //     this.colorOpacityInput(event);
@@ -79,62 +131,10 @@ class UserSettings {
         }
     }
 
-    gridSizeInput = function () {
-        this.sketchPad.padSize = this.gridSize.value;
-        this.sketchPad.clearPad();
-        this.sketchPad.fillPad();
-        this.showGridSize();
-        // this.drawBorders();
-        // this.actionStack = [];
-        // this.unprocessedActions = [];
-        // this.redoActionsStack = [];
-    }
-
-    //displays grid size in the app
-    showGridSize = function () {
-        document.getElementById('grid-size').innerHTML = `${this.sketchPad.padSize}X${this.sketchPad.padSize}`;
-    }
-
-    // // draws borders around the squares
-    // drawBorders = function () {
-    //     this.that.sketchPad.forEach((square) => {
-
-    //         if (this.gridBorders) {
-    //             square.classList.add('gridBorder');
-
-    //         } else if (!this.gridBorders) {
-    //             square.classList.remove('gridBorder')
-    //         }
-    //     })
-    // }
-
-    // handleUserSettings = function (event) {
-    //     const userSetting = event.target;
-
-    //     if (userSetting.id == 'clear') {
-    //         this.clearPad();
-    //         this.fillPad();
-    //         this.drawBorders();
-
-    //     } else if (userSetting.name == 'border') {
-    //         if (userSetting.value == 'border-on') {
-    //             this.gridBorders = true;
-
-    //         } else {
-    //             this.gridBorders = false;
-
-    //         } this.drawBorders(); //if there's event on grid-border option, this function takes radio input value, sets boolean based on input and calls function which draws border based on that boolean.
-
-    //     } else if (userSetting.id === 'undo' || userSetting.id === 'redo') {
-    //         this.handleUndoRedo(event);
-    //     }
-    // }
-    
-    
 
     executeUserSettings = function () {
         this.userSettings.addEventListener('input', this.handleInputRanges.bind(this)); //handles range inputs
-        // this.userSettings.addEventListener('click', this.handleUserSettings.bind(this));
+        this.userSettings.addEventListener('click', this.handleUserSettings.bind(this));
     }
 }
 
