@@ -137,7 +137,8 @@ class ColorSettings {
             r: 0,
             g: 0,
             b: 0,
-            a: 1.0
+            a: 1.0,
+            rgba: function() {return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})` }
         };
         this.recentColors = [];
     }
@@ -163,8 +164,7 @@ class ColorSettings {
     showSelectedColor = function () { 
         const color = document.querySelector('#currentColor');
 
-        color.style.backgroundColor = `rgba(
-            ${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`;
+        color.style.backgroundColor = this.color.rgba();
     }
 
     //changes alpha (a) value in color attribute
@@ -172,8 +172,7 @@ class ColorSettings {
         const userInput = event.target;
 
         this.color.a = (userInput.value / 100);
-        this.sketchPad.pencilColor = `rgba(
-            ${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
+        this.sketchPad.pencilColor = this.color.rgba();
 
         this.showSelectedColor();
         this.showOpacityValue();
@@ -188,44 +187,50 @@ class ColorSettings {
 
     handleColorSettings = function (event) {
         const colorSetting = event.target;
+        let rawColor;
+
+        if (colorSetting.classList.contains('color') || (colorSetting.id ==='eraser')) {
+            
+            if (colorSetting.classList.contains('color')) {
+               rawColor = colorSetting.getAttribute('data-color');
+   
+           } else if (colorSetting.id ==='eraser') {
+               rawColor = '#F6F7D7'
+           }
+
+           this.hexToRGB(rawColor);
+           this.showSelectedColor(); 
+           this.sketchPad.pencilColor = this.color.rgba();
+        }
+    }
+
+    handleCustomColor = function (event) {
+        const colorSetting = event.target;
 
         if (colorSetting.id === 'rgb') { //custom color picker
-            colorSetting.oninput = () =>  {
                 this.hexToRGB(colorSetting.value);
                 this.showSelectedColor();
-                this.sketchPad.pencilColor = `rgba(${
-                    this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
-            }; return;
-
-        } else if (colorSetting.classList.contains('color')) {
-            this.hexToRGB(colorSetting.getAttribute('data-color'));  
-
-        } else if (colorSetting.id ==='eraser') {
-            this.hexToRGB('#F6F7D7');
-        }
-
-        this.showSelectedColor(); 
-        this.sketchPad.pencilColor = `rgba(
-            ${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
-    }
-
-
-    markRecentColor = function (color) {
-        const lastColor = this.recentColors[this.recentColors.length-1];
-
-        if (lastColor != color) {
-            if (this.recentColors.length >= 5) {
-                this.recentColors.shift();
-            }
-            this.recentColors.push(color);
+                this.sketchPad.pencilColor = this.color.rgba();
         }
     }
+
+    // markRecentColor = function (color) {
+    //     const lastColor = this.recentColors[this.recentColors.length-1];
+
+    //     if (lastColor != color) {
+    //         if (this.recentColors.length >= 5) {
+    //             this.recentColors.shift();
+    //         }
+    //         this.recentColors.push(color);
+    //     }
+    // }
 
     executeColorSettings = function () {
         this.showSelectedColor();
         this.showOpacityValue();
 
         this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
+        this.colorSettings.addEventListener('input', this.handleCustomColor.bind(this));
         document.getElementById('opacityInput').addEventListener('input', this.handleOpacityInput.bind(this));
     }
 }
