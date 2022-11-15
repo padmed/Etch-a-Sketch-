@@ -138,6 +138,7 @@ class ColorSettings {
             g: 0,
             b: 0,
             a: 1.0,
+            rgb: function() {return `rgb(${this.r}, ${this.g}, ${this.b})`},
             rgba: function() {return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})` }
         };
         this.recentColors = [];
@@ -194,13 +195,15 @@ class ColorSettings {
             if (colorSetting.classList.contains('color')) {
                rawColor = colorSetting.getAttribute('data-color');
    
-           } else if (colorSetting.id ==='eraser') {
+            } else if (colorSetting.id ==='eraser') {
                rawColor = '#F6F7D7'
-           }
+            }
 
            this.hexToRGB(rawColor);
            this.showSelectedColor(); 
            this.sketchPad.pencilColor = this.color.rgba();
+           this.markRecentColor(this.color.rgb());
+           this.showRecentColors();
         }
     }
 
@@ -210,20 +213,37 @@ class ColorSettings {
         if (colorSetting.id === 'rgb') { //custom color picker
                 this.hexToRGB(colorSetting.value);
                 this.showSelectedColor();
+                this.markRecentColor(this.color.rgb());
                 this.sketchPad.pencilColor = this.color.rgba();
+                this.showRecentColors();
         }
     }
 
-    // markRecentColor = function (color) {
-    //     const lastColor = this.recentColors[this.recentColors.length-1];
+    markRecentColor = function (color) {
+        const eraser = "rgb(246, 247, 215)"
+        const text = document.getElementById('recentColorText');
 
-    //     if (lastColor != color) {
-    //         if (this.recentColors.length >= 5) {
-    //             this.recentColors.shift();
-    //         }
-    //         this.recentColors.push(color);
-    //     }
-    // }
+        text.innerHTML = 'Recent Colors:'
+        if (!this.recentColors.includes(color) && color != eraser) {
+            if (this.recentColors.length >= 5) {
+                this.recentColors.shift();
+
+            } this.recentColors.push(color);
+        }
+        console.log(this.recentColors)
+    }
+
+    showRecentColors = function () {
+        let index = this.recentColors.length - 1;
+        const recentColors = document.querySelectorAll('.recColor');
+        let i = 0;
+
+        for (index; index >= 0; --index) {
+            recentColors[index].classList.add('visible');
+            recentColors[index].style.backgroundColor = this.recentColors[i];
+            i++
+        }
+    }
 
     executeColorSettings = function () {
         this.showSelectedColor();
