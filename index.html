@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Etch-A-Sketch</title>
-    <script src="logic.js" defer></script>
+    <script src="logic_v2.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
@@ -60,7 +60,14 @@
                 <div id="draw-box"></div>
             </div>
         </div>
-        <div id="invisibleElement"></div>
+        <div id="recentColors">
+            <label id="recentColorText"> </label>
+            <div class="recColor left"> </div>
+            <div class="recColor right"></div>
+            <div class="recColor left"></div>
+            <div class="recColor right"></div>
+            <div class="recColor left"></div>
+        </div>
     </div>
 </body>
 </html>

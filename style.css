@@ -194,6 +194,7 @@ img:hover {
     width: 27vh;
     height: 80%;
     align-items: center;
+    border: 1px solid
 }
 
 #currentColor {
@@ -420,9 +421,42 @@ input[type=range]:focus::-ms-fill-upper {
     background: #FF9A00;
 }
 
-.invisibleElement {
+#recentColors{
     width: 27vh;
     height: 80%;
-    border: 1px solid;
     margin-left: 8vh;
+    padding-top: 3vh;
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+}
+
+#recentColors > label {
+    align-self: center;
+    -webkit-text-stroke: 1px #F6F7D7;
+    font-size: 2vh;
+    margin-bottom: 2vh;
+    transition: 0.3s;
+}
+
+.recColors {
+    border: 1px solid rgba(0,0,0,0);
+    border-radius: 50%
+}
+.visible {
+    width: 8.5vh;
+    height: 8.5vh;
+    border-radius: 50%;
+    border: 2px solid #F6F7D7;
+    transition: 0.3s;
+}
+
+.recColor.left {
+    align-self: start;
+    margin-left: 4vh;
+}
+
+.recColor.right {
+    align-self: end;
+    margin-right: 4vh;
 }
