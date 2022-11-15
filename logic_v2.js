@@ -227,34 +227,35 @@ class ColorSettings {
         const rgb = this.color.rgb();
         const rgba = this.color.rgba();
 
-        for (let i = 0; i < this.recentColors.length; i++) { //returns 
+        for (let i = 0; i < this.recentColors.length; i++) {
             let colValues = Object.values(this.recentColors[i]);
 
-            if (colValues.includes(rgba)){
-                return;
-            }
+            if (colValues.includes(rgba)) return;
         }
 
         if (rgb != eraser) {
             if (this.recentColors.length >= 5) {
                 this.recentColors.shift();
-
             } this.recentColors.push({rgb: rgb, rgba: rgba});
         }
     }
 
     showRecentColors = function () {
-        let index = this.recentColors.length - 1;
+        let i = this.recentColors.length - 1;
+        let reverseI = 0;
         const recentColorsElements = document.querySelectorAll('.recColor');
         const text = document.getElementById('recentColorText');
-        let i = 0;
 
         text.innerHTML = 'Recent Colors:'
 
-        for (index; index >= 0; --index) {
-            recentColorsElements[index].classList.add('visible');
-            recentColorsElements[index].style.backgroundColor = this.recentColors[i]['rgb'];
-            i++
+        for (i; i >= 0; --i) {
+            const recColElement = recentColorsElements[i];
+            const recCol = this.recentColors[reverseI];
+
+            recColElement.classList.add('visible');
+            recColElement.style.backgroundColor = recCol['rgb'];
+            recColElement.setAttribute('data-recColor', recCol['rgba']);
+            reverseI++
         }
     }
 
