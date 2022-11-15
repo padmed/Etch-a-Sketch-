@@ -131,15 +131,15 @@ class UserSettings {
 
 class ColorSettings {
     constructor(objContext) {
-        this.colorSettings = document.getElementById('color-settings') //parent element for all color settings
-        this.sketchPad = objContext.sketchPad;
-        this.userSetting = objContext.userSettings;
+        this.colorSettings = document.getElementById('color-settings') //color settings section (top of sketchpad)
+        this.sketchPad = objContext.sketchPad; //Helps in refering to same Main class object.
         this.color = {
             r: 0,
             g: 0,
             b: 0,
             a: 1.0
         };
+        this.recentColors = [];
     }
 
     hexToRGB = function (hex) {
@@ -160,38 +160,42 @@ class ColorSettings {
         this.color.b = parseInt(hex.slice(5, 7), 16);
     }
 
-    showSelectedColor = function () {
+    showSelectedColor = function () { 
         const color = document.querySelector('#currentColor');
-        
-        color.style.backgroundColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`;
+
+        color.style.backgroundColor = `rgba(
+            ${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`;
     }
 
-    colorOpacityInput = function (event) {
+    //changes alpha (a) value in color attribute
+    handleOpacityInput = function (event) {
         const userInput = event.target;
 
         this.color.a = (userInput.value / 100);
+        this.sketchPad.pencilColor = `rgba(
+            ${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
+
         this.showSelectedColor();
         this.showOpacityValue();
-        this.sketchPad.pencilColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
     }
 
     showOpacityValue = function() {
         const displayOpacity = document.querySelector('#opacityValue');
-        const opacityPercentage = Math.floor(this.color.a * 100);
+        const opacityPercValue = Math.floor(this.color.a * 100);
 
-        displayOpacity.innerHTML = `${opacityPercentage}%`
+        displayOpacity.innerHTML = `${opacityPercValue}%`
     }
 
     handleColorSettings = function (event) {
         const colorSetting = event.target;
 
-        if (colorSetting.id === 'rgb') {
+        if (colorSetting.id === 'rgb') { //custom color picker
             colorSetting.oninput = () =>  {
                 this.hexToRGB(colorSetting.value);
                 this.showSelectedColor();
-                this.sketchPad.pencilColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
-                return;
-            }
+                this.sketchPad.pencilColor = `rgba(${
+                    this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
+            }; return;
 
         } else if (colorSetting.classList.contains('color')) {
             this.hexToRGB(colorSetting.getAttribute('data-color'));  
@@ -200,15 +204,29 @@ class ColorSettings {
             this.hexToRGB('#F6F7D7');
         }
 
-        this.showSelectedColor();
-        this.sketchPad.pencilColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
+        this.showSelectedColor(); 
+        this.sketchPad.pencilColor = `rgba(
+            ${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.color.a})`
+    }
+
+
+    markRecentColor = function (color) {
+        const lastColor = this.recentColors[this.recentColors.length-1];
+
+        if (lastColor != color) {
+            if (this.recentColors.length >= 5) {
+                this.recentColors.shift();
+            }
+            this.recentColors.push(color);
+        }
     }
 
     executeColorSettings = function () {
         this.showSelectedColor();
         this.showOpacityValue();
+
         this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
-        document.getElementById('opacityInput').addEventListener('input', this.colorOpacityInput.bind(this));
+        document.getElementById('opacityInput').addEventListener('input', this.handleOpacityInput.bind(this));
     }
 }
 
