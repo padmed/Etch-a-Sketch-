@@ -4,7 +4,9 @@ class SketchPad {
         this.padSize = 16;
         this.squares = null; // all square elements, initializes later after function draws them
         this.pencilColor = 'black';
-        this.colorGridFunctionCopy = this.colorSquare.bind(this); //helps in refering the same object 
+        this.handlePadEventsCopy = this.handlePadEvents.bind(this); //helps in refering the same object
+        this.actions = [];
+        this.actionStack = [];
     }
 
     //creates parent - child div elements, takes grid form with css flexbox 
@@ -47,13 +49,22 @@ class SketchPad {
         };
     }
 
+    handlePadEvents = function (event) {
+        this.colorSquare(event);
+        this.saveActions(event);
+    }
+
     executeSketchPad = function () {
         this.fillPad();
 
-        this.pad.addEventListener('mousedown', this.colorSquare.bind(this));
-        this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', this.colorGridFunctionCopy)); // Adds listener while mouse press, colors squares
-        window.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', this.colorGridFunctionCopy)); // removes sketchpad listener after mouse release
+        this.pad.addEventListener('mousedown', this.handlePadEventsCopy);
+        this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', this.handlePadEventsCopy)); // Adds listener while mouse press, colors squares
+        window.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', this.handlePadEventsCopy)); // removes sketchpad listener after mouse release
 
+    }
+
+    saveActions = function (action) {
+        this.actions.push(action);
     }
 }
 
@@ -75,9 +86,6 @@ class UserSettings {
             this.showGridSize();
             this.drawBorders();
         }
-        // this.actionStack = [];
-        // this.unprocessedActions = [];
-        // this.redoActionsStack = [];
     }
 
     //displays grid size in the app
