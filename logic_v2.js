@@ -131,8 +131,8 @@ class UserSettings {
 
 class ColorSettings {
     constructor(objContext) {
-        this.colorSettings = document.getElementById('color-settings') //color settings section (top of sketchpad)
         this.sketchPad = objContext.sketchPad; //Helps in refering to same Main class object.
+
         this.color = {
             r: 0,
             g: 0,
@@ -141,6 +141,7 @@ class ColorSettings {
             rgb: function() {return `rgb(${this.r}, ${this.g}, ${this.b})`},
             rgba: function() {return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})` }
         };
+
         this.recentColors = [];
     }
 
@@ -162,11 +163,20 @@ class ColorSettings {
         this.color.b = parseInt(hex.slice(5, 7), 16);
     }
 
+    rgbToHex = function (red, green, blue) {
+        function ColorToHex(color) {
+            var hexadecimal = color.toString(16);
+            return hexadecimal.length == 1 ? "0" + hexadecimal : hexadecimal;
+        }
+
+        return "#" + ColorToHex(red) + ColorToHex(green) + ColorToHex(blue);
+      }
+    
     showSelectedColor = function () { 
         const color = document.querySelector('#currentColor');
-
         color.style.backgroundColor = this.color.rgba();
     }
+
 
     //changes alpha (a) value in color attribute
     handleOpacityInput = function (event) {
@@ -190,8 +200,8 @@ class ColorSettings {
         const colorSetting = event.target;
         let rawColor;
 
-        if (colorSetting.classList.contains('color') || (colorSetting.id ==='eraser')) {
-            
+        if (colorSetting.classList.contains('color') || (colorSetting.id ==='eraser')) { 
+
             if (colorSetting.classList.contains('color')) {
                rawColor = colorSetting.getAttribute('data-color');
    
@@ -222,50 +232,68 @@ class ColorSettings {
         }
     }
 
-    markRecentColor = function () {
-        const eraser = "rgb(246, 247, 215)"
-        const rgb = this.color.rgb();
-        const rgba = this.color.rgba();
+    // markRecentColor = function () {
+    //     const eraser = "rgb(246, 247, 215)";
+    //     const hex = "12"
+    // }
+    // markRecentColor = function () {
+    //     const eraser = "rgb(246, 247, 215)"
+    //     const rgb = this.color.rgb();
+    //     const rgba = this.color.rgba();
 
-        for (let i = 0; i < this.recentColors.length; i++) {
-            let colValues = Object.values(this.recentColors[i]);
+    //     for (let i = 0; i < this.recentColors.length; i++) {
+    //         let colValues = Object.values(this.recentColors[i]);
 
-            if (colValues.includes(rgba)) return;
-        }
+    //         if (colValues.includes(rgba)) return;
+    //     }
 
-        if (rgb != eraser) {
-            if (this.recentColors.length >= 5) {
-                this.recentColors.shift();
-            } this.recentColors.push({rgb: rgb, rgba: rgba});
-        }
-    }
+    //     if (rgb != eraser) {
+    //         if (this.recentColors.length >= 5) {
+    //             this.recentColors.shift();
+    //         } this.recentColors.push({rgb: rgb, rgba: rgba});
+    //     }
+    // }
 
-    showRecentColors = function () {
-        let i = this.recentColors.length - 1;
-        let reverseI = 0;
-        const recentColorsElements = document.querySelectorAll('.recColor');
-        const text = document.getElementById('recentColorText');
+    // showRecentColors = function () {
+    //     let i = this.recentColors.length - 1;
+    //     let reverseI = 0;
+    //     const recentColorsElements = document.querySelectorAll('.recColor');
+    //     const text = document.getElementById('recentColorText');
 
-        text.innerHTML = 'Recent Colors:'
+    //     text.innerHTML = 'Recent Colors:'
 
-        for (i; i >= 0; --i) {
-            const recColElement = recentColorsElements[i];
-            const recCol = this.recentColors[reverseI];
+    //     for (i; i >= 0; --i) {
+    //         const recColElement = recentColorsElements[i];
+    //         const recCol = this.recentColors[reverseI];
 
-            recColElement.classList.add('visible');
-            recColElement.style.backgroundColor = recCol['rgb'];
-            recColElement.setAttribute('data-recColor', recCol['rgba']);
-            reverseI++
-        }
-    }
+    //         recColElement.classList.add('visible');
+    //         recColElement.style.backgroundColor = recCol['rgb'];
+    //         recColElement.setAttribute('data-recColor', recCol['rgba']);
+    //         reverseI++
+    //     }
+    // }
+
+    // handleRecentColor = function (event) {
+    //     const recColElemenet = event.target;
+
+    //     if (recColElemenet.classList.contains('recColor')) {
+    //         console.log('yay')
+    //     }
+    // }
 
     executeColorSettings = function () {
-        this.showSelectedColor();
-        this.showOpacityValue();
+        // const colorSettings = document.getElementById('color-settings'); //color settings section (top of sketchpad)
+        // const opacityInput = document.getElementById('opacityInput');
+        // const recentColorsSection = document.getElementById('recentColors');
 
-        this.colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
-        this.colorSettings.addEventListener('input', this.handleCustomColor.bind(this));
-        document.getElementById('opacityInput').addEventListener('input', this.handleOpacityInput.bind(this));
+
+        // this.showSelectedColor();
+        // this.showOpacityValue();
+
+        // colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
+        // colorSettings.addEventListener('input', this.handleCustomColor.bind(this));
+        // opacityInput.addEventListener('input', this.handleOpacityInput.bind(this));
+        // recentColorsSection.addEventListener('click', this.handleRecentColor.bind(this));
     }
 }
 
@@ -284,10 +312,10 @@ class Main {
         this.sketchPad.executeSketchPad();
         this.userSettings.executeUserSettings();
         this.colorSettings.executeColorSettings();
-        
     }
 }
 
 
 const main = new Main();
 main.execute();
+
