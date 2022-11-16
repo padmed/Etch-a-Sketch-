@@ -6,7 +6,6 @@ class SketchPad {
         this.pencilColor = 'black';
         this.handlePadEventsCopy = this.handlePadEvents.bind(this); //helps in refering the same object
         this.actions = [];
-        this.actionStack = [];
     }
 
     //creates parent - child div elements, takes grid form with css flexbox 
@@ -54,6 +53,18 @@ class SketchPad {
         this.saveActions(event);
     }
 
+    saveActions = function (action) {
+        this.actions.push(action);
+    }
+
+    deleteActions = function() {
+        this.actions = [];
+    }
+
+    getActions = function () {
+        return this.actions;
+    }
+
     executeSketchPad = function () {
         this.fillPad();
 
@@ -62,12 +73,7 @@ class SketchPad {
         window.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', this.handlePadEventsCopy)); // removes sketchpad listener after mouse release
 
     }
-
-    saveActions = function (action) {
-        this.actions.push(action);
-    }
 }
-
 
 
 class UserSettings {
@@ -301,6 +307,21 @@ class ColorSettings {
 }
 
 
+class UndoRedo {
+    constructor (objContext) {
+        this.sketchPad = objContext.sketchPad
+        this.actions = this.sketchPad.getActions();
+        this.actionStack = [];
+        console.log(this.actions);
+    }
+
+    executeUndoRedo = function () {
+        const buttons = document.getElementById('undo-redo');
+
+        buttons.addEventListener('click', )
+    }
+}
+
 
 class Main {
     constructor () {
@@ -309,6 +330,7 @@ class Main {
         this.sketchPad = new SketchPad();
         this.userSettings = new UserSettings(this.objContext);
         this.colorSettings = new ColorSettings(this.objContext);
+        this.undoRedo = new UndoRedo(this.objContext);
     }
 
     execute = function () {
