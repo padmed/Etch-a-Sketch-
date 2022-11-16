@@ -165,7 +165,7 @@ class ColorSettings {
 
     rgbToHex = function (red, green, blue) {
         function ColorToHex(color) {
-            var hexadecimal = color.toString(16);
+            let hexadecimal = color.toString(16);
             return hexadecimal.length == 1 ? "0" + hexadecimal : hexadecimal;
         }
 
@@ -215,7 +215,7 @@ class ColorSettings {
 
            if (colorSetting.id !== 'eraser') {
                this.markRecentColor();
-            //    this.showRecentColors();
+               this.showRecentColors();
            }
         }
     }
@@ -228,67 +228,48 @@ class ColorSettings {
                 this.showSelectedColor();
                 this.markRecentColor();
                 this.sketchPad.pencilColor = this.color.rgba();
-                // this.showRecentColors();
+                this.showRecentColors();
         }
     }
 
     markRecentColor = function () {
-        const hexCol = this.rgbToHex(this.color.a, this.color.g, this.color.b);
+        const hexCol = this.rgbToHex(this.color.r, this.color.g, this.color.b);
 
         if (this.recentColors.includes(hexCol)) {
             return;
 
         } else if ( this.recentColors.length >= 5) {
             this.recentColors.shift();
-            
+
         } this.recentColors.push(hexCol);
-        console.log(this.recentColors);
     }
 
-    // markRecentColor = function () {
-    //     const eraser = "rgb(246, 247, 215)"
-    //     const rgb = this.color.rgb();
-    //     const rgba = this.color.rgba();
+    showRecentColors = function () {
+        let i = this.recentColors.length - 1;
+        let reverseI = 0;
+        const recentColorsElements = document.querySelectorAll('.recColor');
+        const text = document.getElementById('recentColorText');
 
-    //     for (let i = 0; i < this.recentColors.length; i++) {
-    //         let colValues = Object.values(this.recentColors[i]);
+        text.innerHTML = 'Recent Colors:'
 
-    //         if (colValues.includes(rgba)) return;
-    //     }
+        for (i; i >= 0; --i) {
+            const recColElement = recentColorsElements[i];
+            const recCol = this.recentColors[reverseI];
 
-    //     if (rgb != eraser) {
-    //         if (this.recentColors.length >= 5) {
-    //             this.recentColors.shift();
-    //         } this.recentColors.push({rgb: rgb, rgba: rgba});
-    //     }
-    // }
+            recColElement.classList.add('visible');
+            recColElement.style.backgroundColor = recCol;
+            recColElement.setAttribute('data-color', recCol);
+            reverseI++
+        }
+    }
 
-    // showRecentColors = function () {
-    //     let i = this.recentColors.length - 1;
-    //     let reverseI = 0;
-    //     const recentColorsElements = document.querySelectorAll('.recColor');
-    //     const text = document.getElementById('recentColorText');
+    handleRecentColor = function (event) {
+        const recColElemenet = event.target;
 
-    //     text.innerHTML = 'Recent Colors:'
-
-    //     for (i; i >= 0; --i) {
-    //         const recColElement = recentColorsElements[i];
-    //         const recCol = this.recentColors[reverseI];
-
-    //         recColElement.classList.add('visible');
-    //         recColElement.style.backgroundColor = recCol['rgb'];
-    //         recColElement.setAttribute('data-recColor', recCol['rgba']);
-    //         reverseI++
-    //     }
-    // }
-
-    // handleRecentColor = function (event) {
-    //     const recColElemenet = event.target;
-
-    //     if (recColElemenet.classList.contains('recColor')) {
-    //         console.log('yay')
-    //     }
-    // }
+        if (recColElemenet.classList.contains('recColor')) {
+            console.log(recColElemenet.getAttribute('data-color'))
+        }
+    }
 
     executeColorSettings = function () {
         const colorSettings = document.getElementById('color-settings'); //color settings section (top of sketchpad)
@@ -302,7 +283,7 @@ class ColorSettings {
         colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
         colorSettings.addEventListener('input', this.handleCustomColor.bind(this));
         opacityInput.addEventListener('input', this.handleOpacityInput.bind(this));
-        // recentColorsSection.addEventListener('click', this.handleRecentColor.bind(this));
+        recentColorsSection.addEventListener('click', this.handleRecentColor.bind(this));
     }
 }
 
