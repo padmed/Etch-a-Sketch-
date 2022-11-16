@@ -449,6 +449,11 @@ input[type=range]:focus::-ms-fill-upper {
     border-radius: 50%;
     border: 2px solid #F6F7D7;
     transition: 0.3s;
+    cursor: pointer;
+}
+
+.visible:hover {
+    transform: scale(1.1);
 }
 
 .recColor.left {
