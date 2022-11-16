@@ -267,7 +267,10 @@ class ColorSettings {
         const recColElemenet = event.target;
 
         if (recColElemenet.classList.contains('recColor')) {
-            console.log(recColElemenet.getAttribute('data-color'))
+            const hex = recColElemenet.getAttribute('data-color');
+            this.hexToRGB(hex);
+            this.sketchPad.pencilColor = this.color.rgba();
+            this.showSelectedColor();
         }
     }
 
