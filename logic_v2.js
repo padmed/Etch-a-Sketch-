@@ -215,7 +215,7 @@ class ColorSettings {
 
            if (colorSetting.id !== 'eraser') {
                this.markRecentColor();
-               this.showRecentColors();
+            //    this.showRecentColors();
            }
         }
     }
@@ -228,14 +228,23 @@ class ColorSettings {
                 this.showSelectedColor();
                 this.markRecentColor();
                 this.sketchPad.pencilColor = this.color.rgba();
-                this.showRecentColors();
+                // this.showRecentColors();
         }
     }
 
-    // markRecentColor = function () {
-    //     const eraser = "rgb(246, 247, 215)";
-    //     const hex = "12"
-    // }
+    markRecentColor = function () {
+        const hexCol = this.rgbToHex(this.color.a, this.color.g, this.color.b);
+
+        if (this.recentColors.includes(hexCol)) {
+            return;
+
+        } else if ( this.recentColors.length >= 5) {
+            this.recentColors.shift();
+            
+        } this.recentColors.push(hexCol);
+        console.log(this.recentColors);
+    }
+
     // markRecentColor = function () {
     //     const eraser = "rgb(246, 247, 215)"
     //     const rgb = this.color.rgb();
@@ -282,17 +291,17 @@ class ColorSettings {
     // }
 
     executeColorSettings = function () {
-        // const colorSettings = document.getElementById('color-settings'); //color settings section (top of sketchpad)
-        // const opacityInput = document.getElementById('opacityInput');
-        // const recentColorsSection = document.getElementById('recentColors');
+        const colorSettings = document.getElementById('color-settings'); //color settings section (top of sketchpad)
+        const opacityInput = document.getElementById('opacityInput');
+        const recentColorsSection = document.getElementById('recentColors');
 
 
-        // this.showSelectedColor();
-        // this.showOpacityValue();
+        this.showSelectedColor();
+        this.showOpacityValue();
 
-        // colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
-        // colorSettings.addEventListener('input', this.handleCustomColor.bind(this));
-        // opacityInput.addEventListener('input', this.handleOpacityInput.bind(this));
+        colorSettings.addEventListener('click', this.handleColorSettings.bind(this));
+        colorSettings.addEventListener('input', this.handleCustomColor.bind(this));
+        opacityInput.addEventListener('input', this.handleOpacityInput.bind(this));
         // recentColorsSection.addEventListener('click', this.handleRecentColor.bind(this));
     }
 }
