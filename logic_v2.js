@@ -1,9 +1,9 @@
 class SketchPad {
-    constructor(size, color) {
+    constructor() {
         this.pad = document.getElementById('draw-box');
-        this.padSize = size;
+        this.padSize = 16;
         this.squares = null; // all square elements, initializes later after function draws them
-        this.pencilColor = color;
+        this.pencilColor = 'black';
         this.colorGridFunctionCopy = this.colorSquare.bind(this); //helps in refering the same object 
     }
 
@@ -61,9 +61,8 @@ class SketchPad {
 
 class UserSettings {
     constructor (objContext) {
-        this.sketchPad = objContext.sketchPad;
-        this.userSettings = document.getElementById('user-settings'); //parent element for all user settings section
         this.gridSize = document.getElementById('range'); // "input range" element
+        this.sketchPad = objContext.sketchPad;
         this.gridBorder = 'false';
         this.gridSize.value = 16; //sets grid size - "input range" at minimum on restart
     }
@@ -122,8 +121,10 @@ class UserSettings {
     }
 
     executeUserSettings = function () {
-        this.userSettings.addEventListener('input', this.gridSizeInput.bind(this));
-        this.userSettings.addEventListener('click', this.handleUserSettings.bind(this));
+        const userSettings = document.getElementById('user-settings'); //parent element for all user settings section
+
+        userSettings.addEventListener('input', this.gridSizeInput.bind(this));
+        userSettings.addEventListener('click', this.handleUserSettings.bind(this));
         this.showGridSize();
     }
 }
@@ -268,6 +269,7 @@ class ColorSettings {
 
         if (recColElemenet.classList.contains('recColor')) {
             const hex = recColElemenet.getAttribute('data-color');
+
             this.hexToRGB(hex);
             this.sketchPad.pencilColor = this.color.rgba();
             this.showSelectedColor();
@@ -296,7 +298,7 @@ class Main {
     constructor () {
         this.objContext = this;
         
-        this.sketchPad = new SketchPad(16, 'black');
+        this.sketchPad = new SketchPad();
         this.userSettings = new UserSettings(this.objContext);
         this.colorSettings = new ColorSettings(this.objContext);
     }
