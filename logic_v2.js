@@ -5,6 +5,12 @@ class SketchPad {
         this.squares = null; // all square elements, initializes later after function draws them
         this.pencilColor = 'black';
         this.handlePadEventsCopy = this.handlePadEvents.bind(this); //helps in refering the same object
+
+        //undo redo feature properties
+
+        this.events = [];
+        this.actionStack = [];
+        this.redoStack = [];
     }
 
     //creates parent - child div elements, takes grid form with css flexbox 
@@ -47,8 +53,15 @@ class SketchPad {
         };
     }
 
+    saveEvents = function (event) {
+        this.events.push(event);
+    }
+    
+
     handlePadEvents = function (event) {
         this.colorSquare(event);
+        this.saveEvents(event);
+
     }
 
     executeSketchPad = function () {
