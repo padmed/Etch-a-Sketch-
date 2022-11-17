@@ -1,5 +1,6 @@
 class SketchPad {
-    constructor() {
+    constructor(objContext) {
+        this.undoRedo = objContext.undoRedo;
         this.pad = document.getElementById('draw-box');
         this.padSize = 16;
         this.squares = null; // all square elements, initializes later after function draws them
@@ -50,19 +51,7 @@ class SketchPad {
 
     handlePadEvents = function (event) {
         this.colorSquare(event);
-        this.saveActions(event);
-    }
-
-    saveActions = function (action) {
-        this.actions.push(action);
-    }
-
-    deleteActions = function() {
-        this.actions = [];
-    }
-
-    getActions = function () {
-        return this.actions;
+        this.undoRedo.saveActions(event);
     }
 
     executeSketchPad = function () {
@@ -309,16 +298,19 @@ class ColorSettings {
 
 class UndoRedo {
     constructor (objContext) {
-        this.sketchPad = objContext.sketchPad
-        this.actions = this.sketchPad.getActions();
+        this.sketchPad = objContext.sketchPad;
+        this.actions = [];
         this.actionStack = [];
-        console.log(this.actions);
+    }
+    
+    saveActions = function (event) {
+        this.actions.push(event);
     }
 
     executeUndoRedo = function () {
         const buttons = document.getElementById('undo-redo');
 
-        buttons.addEventListener('click', )
+        buttons.addEventListener('click', this.eventIntoActions.bind(this))
     }
 }
 
@@ -327,7 +319,7 @@ class Main {
     constructor () {
         this.objContext = this;
         
-        this.sketchPad = new SketchPad();
+        this.sketchPad = new SketchPad(this.objContext);
         this.userSettings = new UserSettings(this.objContext);
         this.colorSettings = new ColorSettings(this.objContext);
         this.undoRedo = new UndoRedo(this.objContext);
@@ -337,6 +329,7 @@ class Main {
         this.sketchPad.executeSketchPad();
         this.userSettings.executeUserSettings();
         this.colorSettings.executeColorSettings();
+        this.undoRedo.executeUndoRedo();
     }
 }
 
