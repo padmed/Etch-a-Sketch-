@@ -1,12 +1,10 @@
 class SketchPad {
     constructor(objContext) {
-        this.undoRedo = objContext.undoRedo;
         this.pad = document.getElementById('draw-box');
         this.padSize = 16;
         this.squares = null; // all square elements, initializes later after function draws them
         this.pencilColor = 'black';
         this.handlePadEventsCopy = this.handlePadEvents.bind(this); //helps in refering the same object
-        this.actions = [];
     }
 
     //creates parent - child div elements, takes grid form with css flexbox 
@@ -51,7 +49,6 @@ class SketchPad {
 
     handlePadEvents = function (event) {
         this.colorSquare(event);
-        this.undoRedo.saveActions(event);
     }
 
     executeSketchPad = function () {
@@ -296,25 +293,6 @@ class ColorSettings {
 }
 
 
-class UndoRedo {
-    constructor (objContext) {
-        this.sketchPad = objContext.sketchPad;
-        this.actions = [];
-        this.actionStack = [];
-    }
-    
-    saveActions = function (event) {
-        this.actions.push(event);
-    }
-
-    executeUndoRedo = function () {
-        const buttons = document.getElementById('undo-redo');
-
-        buttons.addEventListener('click', this.eventIntoActions.bind(this))
-    }
-}
-
-
 class Main {
     constructor () {
         this.objContext = this;
@@ -322,14 +300,12 @@ class Main {
         this.sketchPad = new SketchPad(this.objContext);
         this.userSettings = new UserSettings(this.objContext);
         this.colorSettings = new ColorSettings(this.objContext);
-        this.undoRedo = new UndoRedo(this.objContext);
     }
 
     execute = function () {
         this.sketchPad.executeSketchPad();
         this.userSettings.executeUserSettings();
         this.colorSettings.executeColorSettings();
-        this.undoRedo.executeUndoRedo();
     }
 }
 
