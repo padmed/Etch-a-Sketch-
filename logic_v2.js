@@ -39,7 +39,6 @@ class SketchPad {
     //clears grid
     clearPad = function () {
         const toRemove = document.querySelectorAll('.parentDiv');
-
         toRemove.forEach((element) => element.remove());
     }
     
@@ -53,23 +52,40 @@ class SketchPad {
         };
     }
 
-    saveEvents = function (event) {
-        this.events.push(event);
-    }
-    
-
     handlePadEvents = function (event) {
         this.colorSquare(event);
         this.saveEvents(event);
-
     }
 
+    saveEvents = function (event) {
+        this.events.push(event);
+    }
+
+    eventIntoActions = function () {
+        for (let i = 0; i < this.events.length; i++) {
+            let event = this.events[i];
+
+            if (event.type === 'mousedown') {
+                this.actionStack.push([event.target]);
+
+            } else {
+                this.actionStack[this.actionStack.length - 1].push(event.target);
+            }
+        }
+
+        this.events = []; //clearing the unprocessed stack to prevent repetition in actionStack
+    }
+
+
     executeSketchPad = function () {
+        const buttons = document.getElementById('undo-redo');
+
         this.fillPad();
 
         this.pad.addEventListener('mousedown', this.handlePadEventsCopy);
         this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', this.handlePadEventsCopy)); // Adds listener while mouse press, colors squares
         window.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', this.handlePadEventsCopy)); // removes sketchpad listener after mouse release
+        window.addEventListener('mouseup', this.eventIntoActions.bind(this));
 
     }
 }
