@@ -76,6 +76,18 @@ class SketchPad {
         this.events = []; //clearing the unprocessed stack to prevent repetition in actionStack
     }
 
+    handleUndoRedo = function (event) {
+        if (event.target.id === 'undo' && this.actionStack.length > 0) {
+            const undoAction = this.actionStack.pop()
+            this.redoStack.push(undoAction);
+
+        } else if (event.target.id === 'redo' && this.redoStack.length > 0) {
+            const redoAction = this.redoStack.pop();
+            this.actionStack.push(redoAction)
+        }
+        console.log(this.actionStack)
+        // this.executeUndoRedo();
+    }
 
     executeSketchPad = function () {
         const buttons = document.getElementById('undo-redo');
@@ -86,7 +98,7 @@ class SketchPad {
         this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', this.handlePadEventsCopy)); // Adds listener while mouse press, colors squares
         window.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', this.handlePadEventsCopy)); // removes sketchpad listener after mouse release
         window.addEventListener('mouseup', this.eventIntoActions.bind(this));
-
+        buttons.addEventListener('click', this.handleUndoRedo.bind(this));
     }
 }
 
