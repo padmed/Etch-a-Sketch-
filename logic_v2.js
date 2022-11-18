@@ -5,12 +5,10 @@ class SketchPad {
         this.squares = null; // all square elements, initializes later after function draws them
         this.pencilColor = 'black';
         this.handlePadEventsCopy = this.handlePadEvents.bind(this); //helps in refering the same object
-
         //undo redo feature properties
 
         this.events = [];
         this.actionStack = [];
-        this.redoStack = [];
     }
 
     //creates parent - child div elements, takes grid form with css flexbox 
@@ -78,37 +76,9 @@ class SketchPad {
         this.events = []; //clearing the unprocessed stack to prevent repetition in actionStack
     }
 
-    handleUndoRedo = function (event) {
-        if (event.target.id === 'undo' && this.actionStack.length > 0) {
-            const undoAction = this.actionStack.pop()
-            this.redoStack.push(undoAction);
-
-        } else if (event.target.id === 'redo' && this.redoStack.length > 0) {
-            const redoAction = this.redoStack.pop();
-            this.actionStack.push(redoAction)
-        }
-        console.log(this.actionStack)
-        this.drawUndoRedo();
-    }
-
-    drawUndoRedo = function () {
-        const toRemove = document.querySelectorAll('.parentDiv'); //clears sketchpad withoy modyfing actionStack
-        toRemove.forEach((element) => element.remove());
-
-        this.fillPad();
-
-        if (this.gridBorders) { //if grid border option is choosen this will draw borders
-            this.drawBorders();
-        }
-
-        this.actionStack.forEach((action) => {
-            for (let square = 0; square < action.length; square++) {
-                const squareFromStack = action[square];
-                const squareFromHtml = document.getElementById(squareFromStack.id);
-
-                squareFromHtml.style.backgroundColor = squareFromStack.style.backgroundColor; //colors matching squares with user's previous actions
-            }
-        })
+    getActions = function () {
+        this.eventIntoActions()
+        return this.actionStack;
     }
 
     restartUndoRedo = function() {
@@ -126,7 +96,6 @@ class SketchPad {
         this.pad.addEventListener('mousedown', () => this.pad.addEventListener('mouseover', this.handlePadEventsCopy)); // Adds listener while mouse press, colors squares
         window.addEventListener('mouseup', () => this.pad.removeEventListener('mouseover', this.handlePadEventsCopy)); // removes sketchpad listener after mouse release
         window.addEventListener('mouseup', this.eventIntoActions.bind(this));
-        buttons.addEventListener('click', this.handleUndoRedo.bind(this));
     }
 }
 
@@ -137,6 +106,8 @@ class UserSettings {
         this.sketchPad = objContext.sketchPad;
         this.gridBorder = 'false';
         this.gridSize.value = 16; //sets grid size - "input range" at minimum on restart
+        this.actionStack = [];
+        this.redoStack = [];
     }
 
     gridSizeInput = function (event) {
@@ -183,17 +154,53 @@ class UserSettings {
                 this.gridBorders = false;
 
             } this.drawBorders(); //if there's event on grid-border option, this function takes radio input value, sets boolean based on input and calls function which draws border based on that boolean.
-        } 
-        // } else if (userSetting.id === 'undo' || userSetting.id === 'redo') {
-        //     this.handleUndoRedo(event);
-        // }
+    
+        } else if (userSetting.id === 'undo' || userSetting.id === 'redo') {
+            this.handleUndoRedo(event);
+        }
+    }
+
+    handleUndoRedo = function (event) {
+        this.actionStack = this.sketchPad.getActions();
+
+        if (event.target.id === 'undo' && this.actionStack.length > 0) {
+            const undoAction = this.actionStack.pop()
+            this.redoStack.push(undoAction);
+
+        } else if (event.target.id === 'redo' && this.redoStack.length > 0) {
+            const redoAction = this.redoStack.pop();
+            this.actionStack.push(redoAction)
+        }
+        console.log(this.actionStack)
+        this.drawUndoRedo();
+    }
+
+    drawUndoRedo = function () {
+        const toRemove = document.querySelectorAll('.parentDiv'); //clears sketchpad withoy modyfing actionStack
+        if (toRemove != null) toRemove.forEach((element) => element.remove());
+
+        this.sketchPad.fillPad();
+
+        if (this.gridBorders) this.drawBorders(); //if grid border option is choosen this will draw borders 
+
+        this.actionStack.forEach((action) => {
+            for (let square = 0; square < action.length; square++) {
+                const squareFromStack = action[square];
+                const squareFromHtml = document.getElementById(squareFromStack.id);
+
+                squareFromHtml.style.backgroundColor = squareFromStack.style.backgroundColor; //colors matching squares with user's previous actions
+            }
+        })
     }
 
     executeUserSettings = function () {
         const userSettings = document.getElementById('user-settings'); //parent element for all user settings section
+        const sketchPad = document.getElementById("draw-box");
 
         userSettings.addEventListener('input', this.gridSizeInput.bind(this));
         userSettings.addEventListener('click', this.handleUserSettings.bind(this));
+        sketchPad.addEventListener('click', () => this.redoStack = []);
+        
         this.showGridSize();
     }
 }
