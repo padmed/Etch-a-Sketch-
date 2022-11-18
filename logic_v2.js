@@ -40,6 +40,7 @@ class SketchPad {
     clearPad = function () {
         const toRemove = document.querySelectorAll('.parentDiv');
         toRemove.forEach((element) => element.remove());
+        this.restartUndoRedo();
     }
     
     // colors squares, takes rgba value
@@ -55,6 +56,7 @@ class SketchPad {
     handlePadEvents = function (event) {
         this.colorSquare(event);
         this.saveEvents(event);
+        this.redoStack = [];
     }
 
     saveEvents = function (event) {
@@ -107,6 +109,12 @@ class SketchPad {
                 squareFromHtml.style.backgroundColor = squareFromStack.style.backgroundColor; //colors matching squares with user's previous actions
             }
         })
+    }
+
+    restartUndoRedo = function() {
+        this.events = [];
+        this.actionStack = [];
+        this.redoStack = [];
     }
 
     executeSketchPad = function () {
