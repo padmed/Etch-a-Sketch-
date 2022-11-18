@@ -86,7 +86,27 @@ class SketchPad {
             this.actionStack.push(redoAction)
         }
         console.log(this.actionStack)
-        // this.executeUndoRedo();
+        this.drawUndoRedo();
+    }
+
+    drawUndoRedo = function () {
+        const toRemove = document.querySelectorAll('.parentDiv'); //clears sketchpad withoy modyfing actionStack
+        toRemove.forEach((element) => element.remove());
+
+        this.fillPad();
+
+        if (this.gridBorders) { //if grid border option is choosen this will draw borders
+            this.drawBorders();
+        }
+
+        this.actionStack.forEach((action) => {
+            for (let square = 0; square < action.length; square++) {
+                const squareFromStack = action[square];
+                const squareFromHtml = document.getElementById(squareFromStack.id);
+
+                squareFromHtml.style.backgroundColor = squareFromStack.style.backgroundColor; //colors matching squares with user's previous actions
+            }
+        })
     }
 
     executeSketchPad = function () {
