@@ -88,8 +88,6 @@ class SketchPad {
     }
 
     executeSketchPad = function () {
-        const buttons = document.getElementById('undo-redo');
-
         this.fillPad();
 
         this.pad.addEventListener('mousedown', this.handlePadEventsCopy);
