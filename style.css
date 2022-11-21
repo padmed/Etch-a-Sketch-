@@ -56,6 +56,7 @@ h1 {
 #color-settings {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 0.4vh;
 }
 
 
@@ -74,9 +75,8 @@ h1 {
     display: flex;
     gap: 1vh;
     align-self: end;
-    margin-left: 3vh;
+    margin-left: 1.6vh;
     margin-right: auto;
-    margin-bottom: 0.5vh;
 }
 
 
@@ -192,9 +192,8 @@ img:hover {
     margin-right: 8vh;
     padding-top: 3vh;
     width: 27vh;
-    height: 80%;
+    min-height: 80%;
     align-items: center;
-    border: 1px solid
 }
 
 #currentColor {
@@ -212,23 +211,33 @@ img:hover {
 
 #clear,.button {
     width: 80%;
-    height: 4vh;
+    min-height: 4vh;
     border: 1px solid #F6F7D7;
     font-family: '8BIT WONDER', sans-serif;
     color: #FF165D;
     background-color: #FF9A00;
     cursor: pointer;
-    
+    font-size: 2vh;
 }
+
 
 #clear:hover,.button:hover {
     transform: scale(1.1);
 }
 
 #undo-redo {
+    min-height: 3%;
     width: 80%;
     display: flex;
     justify-content: space-between;
+}
+
+#undo,#redo {
+    min-height: 7%;
+}
+
+#undo > span, #redo > span {
+    font-size: 3vh;
 }
 
 .small.button {
@@ -279,10 +288,6 @@ fieldset {
     border: 2px solid #F6F7D7;
     background-color: #FF9A00;
     height: 5vh;
-}
-
-fieldset:hover {
-    transform: scale(1.1);
 }
 
 legend {
@@ -338,7 +343,7 @@ input[type=range]::-webkit-slider-thumb {
     border-radius: 3px;
     background: #FF165D;
     cursor: pointer;
-    margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+    margin-top: -10px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
     box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
 }
 
@@ -464,4 +469,8 @@ input[type=range]:focus::-ms-fill-upper {
 .recColor.right {
     align-self: end;
     margin-right: 4vh;
+}
+
+#clear,#undo,#redo,.color,#eraser,[alt="rgb"] {
+    transition: 0.2s;
 }
