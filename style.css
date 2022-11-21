@@ -217,7 +217,7 @@ img:hover {
     color: #FF165D;
     background-color: #FF9A00;
     cursor: pointer;
-    font-size: 2vh;
+    font-size: 1.5vh;
 }
 
 
@@ -234,10 +234,11 @@ img:hover {
 
 #undo,#redo {
     min-height: 7%;
+    font-size: 1.2vh;
 }
 
 #undo > span, #redo > span {
-    font-size: 3vh;
+    font-size: 2.3vh;
 }
 
 .small.button {
@@ -287,7 +288,7 @@ fieldset {
     gap: 1vh;
     border: 2px solid #F6F7D7;
     background-color: #FF9A00;
-    height: 5vh;
+    min-height: 5vh;
 }
 
 legend {
@@ -301,8 +302,14 @@ legend {
 
 input[type=radio] {
     cursor: pointer;
+    accent-color: #FF165D;
 }
 
+fieldset > label {
+    margin-top: 0.5vh;
+    display: flex;
+    align-items: center;
+}
 
 
 #opacityInput,#range {
