@@ -234,13 +234,14 @@ class ColorSettings {
             this.color.r = parseInt(r+r, 16);
             this.color.g = parseInt(g+g, 16);
             this.color.b = parseInt(b+b, 16);
-
+            this.color.a = 1.0
             return;
           }
         
         this.color.r = parseInt(hex.slice(1, 3), 16);
         this.color.g = parseInt(hex.slice(3, 5), 16);
         this.color.b = parseInt(hex.slice(5, 7), 16);
+        this.color.a = 1.0
     }
 
     rgbToHex = function (red, green, blue) {
@@ -271,14 +272,17 @@ class ColorSettings {
 
     showOpacityValue = function() {
         const displayOpacity = document.querySelector('#opacityValue');
+        const opacityInput = document.getElementById('opacityInput');
         const opacityPercValue = Math.floor(this.color.a * 100);
 
         displayOpacity.innerHTML = `${opacityPercValue}%`
+
     }
 
     handleColorSettings = function (event) {
         const colorSetting = event.target;
         let rawColor;
+        const opacityInput = document.getElementById('opacityInput');
 
         if (colorSetting.classList.contains('color') || (colorSetting.id ==='eraser')) { 
 
@@ -292,16 +296,21 @@ class ColorSettings {
            this.hexToRGB(rawColor);
            this.showSelectedColor(); 
            this.sketchPad.pencilColor = this.color.rgba();
+           opacityInput.value = '100'
 
            if (colorSetting.id !== 'eraser') {
                this.markRecentColor();
                this.showRecentColors();
+               opacityInput.value = '100';
            }
         }
+
+        this.showOpacityValue();
     }
 
     handleCustomColor = function (event) {
         const colorSetting = event.target;
+        const opacityInput = document.getElementById('opacityInput');
 
         if (colorSetting.id === 'rgb') { //custom color picker
                 this.hexToRGB(colorSetting.value);
@@ -309,6 +318,8 @@ class ColorSettings {
                 this.markRecentColor();
                 this.sketchPad.pencilColor = this.color.rgba();
                 this.showRecentColors();
+                this.showOpacityValue();
+                opacityInput.value = '100';
         }
     }
 
