@@ -193,11 +193,16 @@ class UserSettings {
 
     executeUserSettings = function () {
         const userSettings = document.getElementById('user-settings'); //parent element for all user settings section
-        const sketchPad = document.getElementById("draw-box");
+        const sketchPad = document.getElementById('draw-box');
+        const clearButton = document.getElementById('clear');
 
         userSettings.addEventListener('input', this.gridSizeInput.bind(this));
         userSettings.addEventListener('click', this.handleUserSettings.bind(this));
         sketchPad.addEventListener('click', () => this.redoStack = []);
+        clearButton.addEventListener('click', () => {
+            this.actionStack = [];
+            this.redoStack = [];
+        }) 
         
         this.showGridSize();
     }
